@@ -1,8 +1,17 @@
 import React from "react";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import StylePage from "./pages/style-page";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/style" element={<StylePage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

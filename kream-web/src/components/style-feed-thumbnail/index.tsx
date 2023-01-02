@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { styleFeedExample } from "../../data/styleFeedExample";
 import { FeedThumbnail, Wrapper } from "./style-feed-thumbnail.styled";
 

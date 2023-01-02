@@ -1,5 +1,11 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
+
+interface LoginButton {
+  disabled: boolean;
+  handleClick?: (e: React.MouseEvent) => void;
+}
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -22,7 +28,7 @@ export const LoginForm = styled.form`
   row-gap: 5%;
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled.button<LoginButton>`
   width: 400px;
   height: 52px;
   border: 0px;
@@ -31,6 +37,13 @@ export const LoginButton = styled.button`
   color: white;
   font-size: 16px;
   margin-top: 2%;
+
+  ${(props) =>
+    !props.disabled &&
+    css`
+      background-color: black;
+      cursor: pointer;
+    `}
 `;
 
 export const SignUpWrapper = styled.div`
@@ -78,6 +91,7 @@ export const SocialLogin = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const SocialLoginLogo = styled.img`

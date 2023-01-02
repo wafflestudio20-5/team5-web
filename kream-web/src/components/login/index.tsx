@@ -12,8 +12,13 @@ import {
 } from "./login.styled";
 import kreamFullLogo from "../../static/kream_full_logo.png";
 import naverLogo from "../../static/naver_logo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormItem from "../form-item";
+
+interface InputChecker {
+  name: string;
+  value: string;
+}
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -21,12 +26,36 @@ const Login = () => {
     password: "",
   });
 
+  const [validatedForm, setValidatedForm] = useState({
+    email: true,
+    password: true,
+  });
+
+  const checkFormData = (props: InputChecker) => {
+    const { name, value } = props;
+    console.log(name, value);
+    let expression;
+    if (name === "email") {
+      expression = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    } else {
+      expression =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/i;
+    }
+    const result: boolean = expression.test(value);
+    setValidatedForm({ ...validatedForm, [name]: result });
+  };
+
   const handleFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    checkFormData({ name, value });
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    console.log("success");
   };
 
   return (
@@ -38,17 +67,31 @@ const Login = () => {
           label="이메일 주소"
           placeholder="예) kream@kream.co.kr"
           content={formData.email}
+          validated={validatedForm.email}
           handleChangeContent={handleFormData}
         />
         <FormItem
           name="password"
           type="password"
-          label="이메일 주소"
-          content={formData.email}
+          label="비밀번호"
+          content={formData.password}
+          validated={validatedForm.password}
           handleChangeContent={handleFormData}
         />
       </LoginForm>
-      <LoginButton>로그인</LoginButton>
+      <LoginButton
+        disabled={
+          validatedForm.email &&
+          validatedForm.password &&
+          formData.email &&
+          formData.password
+            ? false
+            : true
+        }
+        onClick={handleClick}
+      >
+        로그인
+      </LoginButton>
       <SignUpWrapper>
         <StyledLink to="/signup">
           <SignUpInfo>이메일 가입</SignUpInfo>

@@ -1,6 +1,6 @@
 export interface StyleFeed {
   id: number;
-  thumbnail: string;
+  images: string[];
   profile: string;
   nickname: string;
   content: string;

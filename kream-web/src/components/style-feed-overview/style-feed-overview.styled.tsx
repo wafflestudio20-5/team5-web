@@ -23,6 +23,6 @@ export const FeedImg = styled.div`
   border-radius: 15px;
 `;
 
-export const FeedDetail = styled.div`
+export const FeedContent = styled.div`
   width: 100%;
 `;

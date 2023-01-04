@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { styleFeedExample } from "../../data/styleFeedExample";
 import { StyleFeed } from "../../types/styleFeed";
-import StyleFeedDetail from "../style-feed-detail";
+import StyleFeedContent from "../style-feed-content";
 import StyleFeedThumbnail from "../style-feed-thumbnail";
 import {
-  FeedDetail,
+  FeedContent,
   FeedImg,
   FeedWrapper,
   MasonryWrapper,
@@ -20,15 +20,15 @@ const StyleFeedOverview = () => {
         {styleFeeds.map((feed) => (
           <FeedWrapper key={feed.id}>
             <FeedImg>
-              <StyleFeedThumbnail thumbnail={feed.thumbnail} />
+              <StyleFeedThumbnail thumbnail={feed.images[0]} />
             </FeedImg>
-            <FeedDetail>
-              <StyleFeedDetail
+            <FeedContent>
+              <StyleFeedContent
                 profile={feed.profile}
                 nickname={feed.nickname}
                 content={feed.content}
               />
-            </FeedDetail>
+            </FeedContent>
           </FeedWrapper>
         ))}
       </MasonryWrapper>

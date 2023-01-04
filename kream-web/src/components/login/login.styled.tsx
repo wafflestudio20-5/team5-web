@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 interface LoginButton {
   disabled: boolean;
-  handleClick?: (e: React.MouseEvent) => void;
+  handleClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Wrapper = styled.div`

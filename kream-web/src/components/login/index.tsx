@@ -14,11 +14,7 @@ import kreamFullLogo from "../../static/kream_full_logo.png";
 import naverLogo from "../../static/naver_logo.png";
 import React, { useEffect, useState } from "react";
 import FormItem from "../form-item";
-
-interface InputChecker {
-  name: string;
-  value: string;
-}
+import { InputChecker } from "../../types/signUpFormType";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +29,6 @@ const Login = () => {
 
   const checkFormData = (props: InputChecker) => {
     const { name, value } = props;
-    console.log(name, value);
     let expression;
     if (name === "email") {
       expression = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -54,7 +49,7 @@ const Login = () => {
     checkFormData({ name, value });
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     console.log("success");
   };
 

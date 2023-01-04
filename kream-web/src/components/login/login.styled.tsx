@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 interface LoginButton {
   disabled: boolean;
-  handleClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Wrapper = styled.div`
@@ -96,7 +96,7 @@ export const SocialLogin = styled.button`
 
 export const SocialLoginLogo = styled.img`
   position: absolute;
-  left: 10px;
-  width: 28px;
-  height: 28px;
+  left: 17px;
+  width: 20px;
+  height: 20px;
 `;

@@ -7,14 +7,19 @@ import {
 } from "./signup.styled";
 import FormItem from "../form-item";
 import ShoeSizeModal from "../shoes-size-modal";
-import { InputChecker, SignUpFormType } from "../../types/signUpFormType";
+import { InputChecker, SignUpRequest } from "../../types/signUpRequest";
+import { signup } from "../../api/signup";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [formData, setFormData] = useState<SignUpFormType>({
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<SignUpRequest>({
     email: "",
     password: "",
     shoes: "",
   });
+
+  const { email, password, shoes } = formData;
 
   const [validatedForm, setValidatedForm] = useState({
     email: true,
@@ -58,7 +63,9 @@ const SignUp = () => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log("success");
+    const repassword = password;
+    const response = signup({ email, password, repassword });
+    console.log(response);
   };
   return (
     <>
@@ -69,7 +76,7 @@ const SignUp = () => {
             name="email"
             label="이메일 주소"
             placeholder="예) kream@kream.co.kr"
-            content={formData.email}
+            content={email}
             validated={validatedForm.email}
             handleChangeContent={handleFormData}
           />
@@ -78,7 +85,7 @@ const SignUp = () => {
             type="password"
             label="비밀번호"
             placeholder="영문, 숫자, 특수문자 조합 8-16자"
-            content={formData.password}
+            content={password}
             validated={validatedForm.password}
             handleChangeContent={handleFormData}
           />
@@ -87,7 +94,7 @@ const SignUp = () => {
             type="shoes"
             label="신발 사이즈"
             placeholder="선택하세요"
-            content={formData.shoes}
+            content={shoes}
             handleClickInput={openShoeSizeModal}
           />
         </SignUpForm>
@@ -95,8 +102,9 @@ const SignUp = () => {
           disabled={
             validatedForm.email &&
             validatedForm.password &&
-            formData.email &&
-            formData.password
+            email &&
+            password &&
+            shoes
               ? false
               : true
           }
@@ -108,7 +116,7 @@ const SignUp = () => {
 
       {modalOpen ? (
         <ShoeSizeModal
-          shoeSize={formData.shoes}
+          shoeSize={shoes}
           setShoeSize={setShoeSize}
           closeShoeSizeModal={closeShoeSizeModal}
         />

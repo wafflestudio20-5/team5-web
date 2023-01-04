@@ -10,8 +10,7 @@ import {
 } from "./shoes-size-modal.styled";
 
 import { ShoeSizeData } from "../../data/styleFeedExample";
-import React, { ReactText, useState } from "react";
-import { SignUpFormType } from "../../types/signUpFormType";
+import React, { useState } from "react";
 
 interface ShoeSizeModal {
   shoeSize: number | string;

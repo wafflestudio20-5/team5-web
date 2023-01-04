@@ -12,9 +12,11 @@ import {
 } from "./login.styled";
 import kreamFullLogo from "../../static/kream_full_logo.png";
 import naverLogo from "../../static/naver_logo.png";
-import React, { useEffect, useState } from "react";
+import googleLogo from "../../static/google_logo.png";
+
+import React, { useState } from "react";
 import FormItem from "../form-item";
-import { InputChecker } from "../../types/signUpFormType";
+import { InputChecker } from "../../types/signUpRequest";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -92,8 +94,6 @@ const Login = () => {
           <SignUpInfo>이메일 가입</SignUpInfo>
         </StyledLink>
         <p style={{ color: "rgb(211 211 211)" }}>|</p>
-        <SignUpInfo>이메일 찾기</SignUpInfo>
-        <p style={{ color: "rgb(211 211 211)" }}>|</p>
         <SignUpInfo>비밀번호 찾기</SignUpInfo>
       </SignUpWrapper>
       <SocialLoginWrapper>
@@ -101,7 +101,10 @@ const Login = () => {
           <SocialLoginLogo alt="naver-logo" src={naverLogo} />
           <p>네이버로 로그인</p>
         </SocialLogin>
-        <SocialLogin>Apple로 로그인</SocialLogin>
+        <SocialLogin>
+          <SocialLoginLogo alt="google-logo" src={googleLogo} />
+          <p>Google로 로그인</p>
+        </SocialLogin>
       </SocialLoginWrapper>
     </Wrapper>
   );

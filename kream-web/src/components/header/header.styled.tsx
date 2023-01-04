@@ -8,28 +8,35 @@ export const Wrapper = styled.div`
 `;
 
 export const UserPage = styled.div`
-  width: 90%;
-  height: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  // height: 20px;
+  padding: 5px 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
   column-gap: 2%;
   justify-content: end;
+  border-bottom: 1px solid #e5e5e5;
 `;
 
 export const UserFont = styled.p`
+  margin: 0;
   font-size: 12px;
   color: rgba(34, 34, 34, 0.8);
   text-decoration-line: none;
 `;
 
 export const OtherPage = styled.div`
-  width: 90%;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 40px;
   height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
 `;
 
 export const PagePart = styled.div`

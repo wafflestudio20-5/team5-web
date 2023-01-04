@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import FindPasswordPage from "./pages/find-password-page";
 import LoginPage from "./pages/login-page";
 import SignUpPage from "./pages/signup-page";
 import StyleDetailPage from "./pages/style-detail-page";
@@ -11,7 +12,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login/find_password" element={<FindPasswordPage />} />
+          <Route path="/join" element={<SignUpPage />} />
           <Route path="/style" element={<StylePage />} />
           <Route path="/style/details" element={<StyleDetailPage />} />
         </Routes>

@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 
 interface SignUpButton {
   disabled: boolean;
-  handleClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Wrapper = styled.div`

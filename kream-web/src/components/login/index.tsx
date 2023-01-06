@@ -90,11 +90,13 @@ const Login = () => {
         로그인
       </LoginButton>
       <SignUpWrapper>
-        <StyledLink to="/signup">
+        <StyledLink to="/join">
           <SignUpInfo>이메일 가입</SignUpInfo>
         </StyledLink>
         <p style={{ color: "rgb(211 211 211)" }}>|</p>
-        <SignUpInfo>비밀번호 찾기</SignUpInfo>
+        <StyledLink to="/login/find_password">
+          <SignUpInfo>비밀번호 찾기</SignUpInfo>
+        </StyledLink>
       </SignUpWrapper>
       <SocialLoginWrapper>
         <SocialLogin>

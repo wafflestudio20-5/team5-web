@@ -1,12 +1,13 @@
 import axios from "axios";
 import { API_URL } from "../constant/constant";
-import { SignUpExample, SignUpRequest } from "../types/signUpRequest";
+import { SignUpRequest } from "../types/signUpRequest";
 
 export const signup = async ({
   email,
   password,
   repassword,
-}: SignUpExample) => {
+  shoes,
+}: SignUpRequest) => {
   try {
     const res = await axios.post(
       `${API_URL}/registration/`,
@@ -14,6 +15,7 @@ export const signup = async ({
         email: email,
         password1: password,
         password2: repassword,
+        shoe_size: shoes,
       },
       { withCredentials: true }
     );

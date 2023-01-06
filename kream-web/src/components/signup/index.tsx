@@ -16,10 +16,11 @@ const SignUp = () => {
   const [formData, setFormData] = useState<SignUpRequest>({
     email: "",
     password: "",
+    repassword: "",
     shoes: "",
   });
 
-  const { email, password, shoes } = formData;
+  const { email, password, repassword, shoes } = formData;
 
   const [validatedForm, setValidatedForm] = useState({
     email: true,
@@ -47,7 +48,9 @@ const SignUp = () => {
       ...formData,
       [name]: value,
     });
-    checkFormData({ name, value });
+    if (name === "email" || name === "password") {
+      checkFormData({ name, value });
+    }
   };
 
   const openShoeSizeModal = (e: React.MouseEvent<HTMLElement>) => {
@@ -64,8 +67,8 @@ const SignUp = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const repassword = password;
-    const response = signup({ email, password, repassword });
-    console.log(response);
+    const response = signup({ email, password, repassword, shoes });
+    navigate("email_sent");
   };
   return (
     <>
@@ -90,6 +93,14 @@ const SignUp = () => {
             handleChangeContent={handleFormData}
           />
           <FormItem
+            name="repassword"
+            type="password"
+            label="비밀번호 확인"
+            content={repassword}
+            validated={repassword === password || !repassword ? true : false}
+            handleChangeContent={handleFormData}
+          />
+          <FormItem
             name="shoes"
             type="shoes"
             label="신발 사이즈"
@@ -104,6 +115,8 @@ const SignUp = () => {
             validatedForm.password &&
             email &&
             password &&
+            repassword &&
+            repassword === password &&
             shoes
               ? false
               : true

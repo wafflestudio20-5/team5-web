@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 export const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
 `;
 
 export const UserPage = styled.div`

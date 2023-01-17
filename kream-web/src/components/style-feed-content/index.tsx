@@ -6,21 +6,21 @@ import {
   UserInfo,
   Username,
   Wrapper,
-} from "./style-feed-detail.styled";
+} from "./style-feed-content.styled";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
-interface StyleFeedDetail {
+interface StyleFeedContent {
   profile: string;
   nickname: string;
   content: string;
 }
 
-const StyleFeedDetail: React.FC<StyleFeedDetail> = ({
+const StyleFeedContent: React.FC<StyleFeedContent> = ({
   profile,
   nickname,
   content,
-}: StyleFeedDetail) => {
+}: StyleFeedContent) => {
   return (
     <Wrapper>
       <UserInfo>
@@ -42,4 +42,4 @@ const StyleFeedDetail: React.FC<StyleFeedDetail> = ({
   );
 };
 
-export default StyleFeedDetail;
+export default StyleFeedContent;

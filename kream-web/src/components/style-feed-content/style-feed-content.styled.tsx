@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { editableInputTypes } from "@testing-library/user-event/dist/utils";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

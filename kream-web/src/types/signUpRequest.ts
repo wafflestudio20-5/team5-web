@@ -5,13 +5,6 @@ export interface SignUpRequest {
   shoes: number | string;
 }
 
-export interface SignUpExample {
-  email: string;
-  password: string;
-  repassword: string;
-  shoes: number | string;
-}
-
 export interface InputChecker {
   name: string;
   value: string;

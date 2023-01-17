@@ -1,6 +1,6 @@
 import Header from "../../components/header";
-import { Wrapper } from "../../components/header/header.styled";
 import StyleFeedDetails from "../../components/style-feed-details";
+import { Wrapper } from "./style-detail-page.styled";
 
 const StyleDetailPage = () => {
   return (

@@ -1,7 +1,21 @@
 import styled from "@emotion/styled";
+import { HashLink } from "react-router-hash-link";
 export const Wrapper = styled.div`
   margin-right: 10%;
   margin-left: 10%;
+`;
+
+export const StyledHashLink = styled(HashLink)`
+  text-decoration: none;
+  color: inherit;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
 `;
 
 export const MasonryWrapper = styled.div`

@@ -11,7 +11,7 @@ const SignUpEmailSent = () => {
       <MailOutlineIcon
         sx={{ width: "200px", height: "200px", mt: "5%", color: "black" }}
       />
-      <EmailSentMessage>이메일 전송이 완료되었습니다!</EmailSentMessage>
+      <EmailSentMessage>이메일 인증이 완료되었습니다!</EmailSentMessage>
       <Link to="/login">
         <LoginPageButton>로그인 페이지로 이동</LoginPageButton>
       </Link>

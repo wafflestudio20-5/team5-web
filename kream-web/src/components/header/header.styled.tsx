@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
+  z-index: 1001;
 `;
 
 export const UserPage = styled.div`

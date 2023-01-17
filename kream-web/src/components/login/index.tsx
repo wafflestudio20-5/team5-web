@@ -18,11 +18,17 @@ import React, { useState } from "react";
 import FormItem from "../form-item";
 import { InputChecker } from "../../types/signUpRequest";
 
+import { useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
+
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const { email, password } = formData;
 
   const [validatedForm, setValidatedForm] = useState({
     email: true,
@@ -51,8 +57,12 @@ const Login = () => {
     checkFormData({ name, value });
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log("success");
+  const handleNaverLogin = () => {};
+
+  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+    const response = login({ email, password });
+    // if(response.status)
+    navigate("/");
   };
 
   return (
@@ -85,7 +95,7 @@ const Login = () => {
             ? false
             : true
         }
-        onClick={handleClick}
+        onClick={handleSubmit}
       >
         로그인
       </LoginButton>
@@ -99,7 +109,7 @@ const Login = () => {
         </StyledLink>
       </SignUpWrapper>
       <SocialLoginWrapper>
-        <SocialLogin>
+        <SocialLogin onClick={handleNaverLogin}>
           <SocialLoginLogo alt="naver-logo" src={naverLogo} />
           <p>네이버로 로그인</p>
         </SocialLogin>

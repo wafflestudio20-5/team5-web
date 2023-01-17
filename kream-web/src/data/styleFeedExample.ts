@@ -9,19 +9,23 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 1,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfNjAg/MDAxNjcyMTMwOTQ4ODEx.OZociMCEDCf_B03WKR_nc9la7V6X1r5q5yUR_ebnOdwg.H5nd07c5_JmS8OAC7S50NAU_T8CbXCwcQo0TyXYttqgg.JPEG/p_2d0d1f89e24a4c3b98faeb31b0814145.jpeg?type=m",
+      "https://i.pinimg.com/474x/79/a0/f0/79a0f095f7d8ae72b1de62147ffa7299.jpg",
     ],
     profile:
       "https://i.pinimg.com/originals/88/43/46/884346f6859f56b2bf973471826df0f2.jpg",
     nickname: "hello123",
     content:
-      "새복많🥶 #KREAMSTYLE #크림스타일 #ootd #스트릿패션 #여자코디 #노스페이스눕시 #에어팟",
+      "새복많🥶 #KREAMSTYLE #크림스타일 \n #ootd #스트릿패션 #여자코디 #노스페이스눕시 #에어팟",
   },
   {
     id: 2,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMjY1/MDAxNjcyMTI5NzE1OTE3.xBKA2yEe3VXjAkb_ci1ADwmI-bNJBP2szf0hvZH8n6og.R7sR0zx6dpqkAur8lLE7JrszD3sc_ddKHR5d5PDBL1sg.JPEG/p_b4c4d388d301402db4aaa954d67888fd.jpeg?type=m",
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMjY1/MDAxNjcyMTI5NzE1OTE3.xBKA2yEe3VXjAkb_ci1ADwmI-bNJBP2szf0hvZH8n6og.R7sR0zx6dpqkAur8lLE7JrszD3sc_ddKHR5d5PDBL1sg.JPEG/p_b4c4d388d301402db4aaa954d67888fd.jpeg?type=m",
+      "https://i.pinimg.com/474x/45/85/fe/4585fe162ae5814b574af62363fec36b.jpg",
+
+      "https://i.pinimg.com/474x/51/8c/bb/518cbbeac9171820c8321b24ef327f08.jpg",
+      "https://i.pinimg.com/474x/45/85/fe/4585fe162ae5814b574af62363fec36b.jpg",
+
+      "https://i.pinimg.com/474x/09/33/20/093320d7d1c67ccf8571eb08195d53af.jpg",
     ],
     profile:
       "https://cdn.eyesmag.com/wp-content/uploads/2019/10/19120227/20-ss-seoulfashionweek-street-fashion-19.jpg",
@@ -31,7 +35,7 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 3,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMTMg/MDAxNjcyMTI0MzA4Mjc5.1NTIdcQCOwBm9FZxHkNgg9hOeDVCb9y_pxNdl_5myk0g.i1W9KnlBJ_nNmBGV2AvwQFBXeyd0_knxT0V3bp6GNh0g.JPEG/p_8def246f800b45c18659a172688c73d6.jpeg?type=m",
+      "https://i.pinimg.com/474x/b7/37/52/b737522c6293b0f4165b303400130172.jpg",
     ],
     profile:
       "https://m.honeynine.com/web/product/big/202208/528b0a510340894a3c8f31b966827089.jpg",
@@ -42,16 +46,16 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 4,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfNzUg/MDAxNjcyMTI2NDMxNDA5.EqRvvVUZzhqPflRx_JabJ026ZWJUbPKKk7ERIknCCLQg.duIiXFr0sxej5aVC4vcxNWiSNUd5VpOVPyUQMsU0HJQg.JPEG/p_e9d5bcfe1ad947a89ff7e67e5a339594.jpeg?type=m",
+      "https://i.pinimg.com/474x/e3/c0/18/e3c0186ce020a3c289f02afff95964de.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "null123",
-    content: "예뿜 아식수 ㅎ",
+    content: "예뿜 아식수 \n ㅎ",
   },
   {
     id: 5,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMTky/MDAxNjcyMTIyMTc2MDIw.kXmowC5Pl-iyCSvGtPTcWhRRuazbZv119YfBRx-qwkcg.XfA8kP4QhRY_LZVqRFw4mr670XrRG15YVD_0s8ZrGW4g.JPEG/p_f2517e9514044b138b78b4070a38de7b.jpeg?type=m",
+      "https://i.pinimg.com/474x/09/33/20/093320d7d1c67ccf8571eb08195d53af.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",
@@ -61,7 +65,7 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 6,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMjU2/MDAxNjcyMTE1NzgxNjM0.CAsKIee5d1uinKptp4G18aV_7fRjiPqgYwH1cKcFnagg.VzYExqyzXtbECEMEPNlPlHBtjLtDpcwfRbYdj3OTKhEg.JPEG/p_c34ef4ebce50470286d85c4dcbd9e7f7.jpeg?type=m",
+      "https://i.pinimg.com/474x/d5/48/39/d5483950d26f035ae57d8ee8b8fe7f32.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",
@@ -71,7 +75,7 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 7,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMjUg/MDAxNjcyMTE3NDk5NjUy.3SPK47x9T-6_Ls2eVwIuZlmNS6dz8u9tpSFBQ64zGa8g.ZE9HL47jVhxZSol6QKReMEwEmK7bepPotcvTdH7N0Ygg.JPEG/p_9014f3561b0c45518adcf097cc1ad4a4.jpeg?type=m",
+      "https://i.pinimg.com/474x/17/31/f0/1731f0f83b0e7b1a28a113b299a49bc3.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",
@@ -80,7 +84,7 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 8,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjZfMjYz/MDAxNjcyMDQxMDQ4NzY2.EC88e0FuIFFSc6-fXWX_EFaZVlc_7nb3VRrvpnjmmccg.ODCqolQ_zH5UrFHa4v_351PCueN7gdqF_ZmGBiwy55kg.JPEG/p_3959e106a47249baa2cb50fb4b19e92c.jpeg?type=m",
+      "https://i.pinimg.com/474x/cb/56/58/cb5658777c1195f7aa9d48a5ec99aad2.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",
@@ -89,7 +93,7 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 9,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMjdfMzQg/MDAxNjcyMTA0MjMyNzM1.fcGKB1bAT94kKnqQqzRLU1GJ41XGLaYcHESnVF8XPokg.yo065I3B3dGibiidOX0y1sc5SqB0oeNPw23J8Bu_hMwg.JPEG/p_b1a2cdd7882c4b6a92c1e3e57eccd7e6.jpeg?type=m",
+      "https://i.pinimg.com/474x/4c/a6/d2/4ca6d272fdb1189f744e86d9ea33ef53.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",
@@ -99,7 +103,27 @@ export const styleFeedExample: StyleFeed[] = [
   {
     id: 10,
     images: [
-      "https://kream-phinf.pstatic.net/MjAyMjEyMTJfMTgz/MDAxNjcwNzgyNDY1MjEx.kKMeg7_62ulV3dgF-qU5kVBbszatLyl1Vq_JTtJOVvUg.UrKi0XiccnfoRcaIZo-uC7HDptrc968uNsWjHyerDL4g.JPEG/p_eaf656149a8e44cb8ca8bde76dc6f6a6.jpeg?type=m",
+      "https://i.pinimg.com/474x/07/d6/36/07d6368bf9e8ae94b414da5d2eb22d2c.jpg",
+    ],
+    profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
+    nickname: "123456",
+    content:
+      "겨울 언제끝나.. #스타일챌린지 #크림챌린지 #오오티디 #스타일챌린지 #인스타맞팔환영",
+  },
+  {
+    id: 11,
+    images: [
+      "https://i.pinimg.com/474x/1a/d3/dd/1ad3dd97e58e31aef4321c8de8e493b4.jpg",
+    ],
+    profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
+    nickname: "123456",
+    content:
+      "겨울 언제끝나.. #스타일챌린지 #크림챌린지 #오오티디 #스타일챌린지 #인스타맞팔환영",
+  },
+  {
+    id: 12,
+    images: [
+      "https://i.pinimg.com/474x/2a/8d/18/2a8d18ba715b3f9c5df3c7efa4aa281c.jpg",
     ],
     profile: "https://pbs.twimg.com/media/Eq363JzVkAAZIfQ.jpg",
     nickname: "123456",

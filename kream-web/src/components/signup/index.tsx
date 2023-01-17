@@ -8,8 +8,8 @@ import {
 import FormItem from "../form-item";
 import ShoeSizeModal from "../shoes-size-modal";
 import { InputChecker, SignUpRequest } from "../../types/signUpRequest";
-import { signup } from "../../api/signup";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../../api/auth";
 
 const SignUp = () => {
   const navigate = useNavigate();

@@ -7,9 +7,9 @@ import {
 } from "./signup.styled";
 import FormItem from "../form-item";
 import ShoeSizeModal from "../shoes-size-modal";
-import { InputChecker, SignUpRequest } from "../../types/signUpRequest";
+import { InputChecker, SignUpRequest } from "../../../types/signUpRequest";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../../api/auth";
+import { signup } from "../../../api/session";
 
 const SignUp = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { styleFeedExample } from "../../data/styleFeedExample";
-import { StyleFeed } from "../../types/styleFeed";
+import { styleFeedExample } from "../../../data/styleFeedExample";
+import { StyleFeed } from "../../../types/styleFeed";
 import StyleFeedDetailHeader from "../style-feed-detail-header";
 import StyleFeedImages from "../style-feed-images";
 import {
@@ -17,9 +17,9 @@ import {
   Wrapper,
 } from "./style-feed-details.styled";
 
-import SmileIcon from "../../assets/smile-icon.svg";
-import CommentIcon from "../../assets/comment-icon.svg";
-import FollowedIcon from "../../assets/followed-icon.svg";
+import SmileIcon from "../../../assets/smile-icon.svg";
+import CommentIcon from "../../../assets/comment-icon.svg";
+import FollowedIcon from "../../../assets/followed-icon.svg";
 
 import StyleFeedDetailContent from "../style-feed-detail-content";
 

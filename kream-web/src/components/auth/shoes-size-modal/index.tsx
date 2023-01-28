@@ -9,7 +9,7 @@ import {
   ModalWrapper,
 } from "./shoes-size-modal.styled";
 
-import { ShoeSizeData } from "../../data/styleFeedExample";
+import { ShoeSizeData } from "../../../data/styleFeedExample";
 import React, { useState } from "react";
 
 interface ShoeSizeModal {

@@ -52,7 +52,7 @@ export const PagePart = styled.div`
 `;
 
 export const OtherFont = styled.p`
-  font-size: 15px;
+  font-size: 18px;
   color: black;
   text-decoration: none;
 `;
@@ -60,16 +60,4 @@ export const OtherFont = styled.p`
 export const Logo = styled.img`
   width: 115px;
   height: 20px;
-`;
-
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
 `;

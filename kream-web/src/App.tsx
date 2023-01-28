@@ -10,6 +10,8 @@ import SignUpEmailSentPage from "./pages/signup-email-sent-page";
 import HomePage from "./pages/home-page";
 import NaverLoginPage from "./pages/naver-login-page";
 import GoogleLoginPage from "./pages/google-login-page";
+import MyPage from "./pages/my-page";
+import MyInfoPage from "./pages/my-info-page";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/login/google_login" element={<GoogleLoginPage />} />
           <Route path="/join" element={<SignUpPage />} />
           <Route path="/join/email_sent" element={<SignUpEmailSentPage />} />
+          <Route path="/my" element={<MyPage />} />
+          <Route path="/my/profile" element={<MyInfoPage />} />
           <Route path="/style" element={<StylePage />} />
           <Route path="/style/details" element={<StyleDetailPage />} />
         </Routes>

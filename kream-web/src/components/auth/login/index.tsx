@@ -5,23 +5,28 @@ import {
   LoginButton,
   SignUpWrapper,
   SignUpInfo,
-  StyledLink,
   SocialLoginWrapper,
   SocialLogin,
   SocialLoginLogo,
 } from "./login.styled";
-import kreamFullLogo from "../../static/kream_full_logo.png";
-import naverLogo from "../../static/naver_logo.png";
-import googleLogo from "../../static/google_logo.png";
+import kreamFullLogo from "../../../assets/kream_full_logo.png";
+import naverLogo from "../../../assets/naver_logo.png";
+import googleLogo from "../../../assets/google_logo.png";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import FormItem from "../form-item";
-import { InputChecker } from "../../types/signUpRequest";
+import { InputChecker } from "../../../types/signUpRequest";
 
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api/auth";
+
+import NaverLogin from "../naver-login";
+import GoogleLogin from "../google-login";
+import { login } from "../../../store/reducers/sessionReducer";
+import { StyledLink } from "../../../utils/StyledComponents";
 
 const Login = () => {
+  // const naverRef = useRef();
+  // const googleRef = useRef();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -57,7 +62,9 @@ const Login = () => {
     checkFormData({ name, value });
   };
 
-  const handleNaverLogin = () => {};
+  // const handleNaverLogin = () => {
+  //   naverRef.current.children[0].click();
+  // };
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     const response = login({ email, password });
@@ -109,14 +116,20 @@ const Login = () => {
         </StyledLink>
       </SignUpWrapper>
       <SocialLoginWrapper>
-        <SocialLogin onClick={handleNaverLogin}>
-          <SocialLoginLogo alt="naver-logo" src={naverLogo} />
+        <SocialLogin>
+          <SocialLoginLogo
+            // onClick={handleNaverLogin}
+            alt="naver-logo"
+            src={naverLogo}
+          />
           <p>네이버로 로그인</p>
         </SocialLogin>
         <SocialLogin>
           <SocialLoginLogo alt="google-logo" src={googleLogo} />
           <p>Google로 로그인</p>
         </SocialLogin>
+        <NaverLogin />
+        <GoogleLogin />
       </SocialLoginWrapper>
     </Wrapper>
   );

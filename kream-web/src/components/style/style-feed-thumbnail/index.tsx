@@ -1,4 +1,4 @@
-import { styleFeedExample } from "../../data/styleFeedExample";
+import { styleFeedExample } from "../../../data/styleFeedExample";
 import { FeedThumbnail, Wrapper } from "./style-feed-thumbnail.styled";
 
 interface StyleFeedThumbnail {

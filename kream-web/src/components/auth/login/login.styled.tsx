@@ -60,18 +60,6 @@ export const SignUpInfo = styled.p`
   color: black;
 `;
 
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
-
 export const SocialLoginWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -3,14 +3,14 @@ import {
   OtherFont,
   OtherPage,
   PagePart,
-  StyledLink,
   UserFont,
   UserPage,
   Wrapper,
 } from "./header.styled";
 
-import kreamLogo from "../../static/kream_logo.png";
+import kreamLogo from "../../assets/kream_logo.png";
 import { Link } from "react-router-dom";
+import { StyledLink } from "../../utils/StyledComponents";
 
 const Header = () => {
   return (
@@ -31,6 +31,9 @@ const Header = () => {
           </StyledLink>
           <StyledLink to="/shop">
             <OtherFont>SHOP</OtherFont>
+          </StyledLink>
+          <StyledLink to="/my">
+            <OtherFont>MY</OtherFont>
           </StyledLink>
         </PagePart>
       </OtherPage>

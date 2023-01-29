@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../libs/urls";
 
-export const requestMyInfo = async (access_token: string) => {
+export const fetchMyInfo = async (access_token: string) => {
   const res = await axios.get(
     process.env.NODE_ENV === "development"
       ? "/accounts/user"

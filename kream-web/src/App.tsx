@@ -12,6 +12,7 @@ import NaverLoginPage from "./pages/naver-login-page";
 import GoogleLoginPage from "./pages/google-login-page";
 import MyPage from "./pages/my-page";
 import MyInfoPage from "./pages/my-info-page";
+import ShopPage from "./pages/shop-page";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/my/profile" element={<MyInfoPage />} />
           <Route path="/style" element={<StylePage />} />
           <Route path="/style/details" element={<StyleDetailPage />} />
+          <Route path="/shop" element={<ShopPage />} />
         </Routes>
       </BrowserRouter>
     </div>

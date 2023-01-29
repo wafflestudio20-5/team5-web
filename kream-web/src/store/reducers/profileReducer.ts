@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { requestMyInfo } from "../../api/profile";
+import { fetchMyInfo } from "../../api/profile";
 
 export const getMyInfo = createAsyncThunk(
   "profile/myInfo",
   async (access_token: string, { rejectWithValue }) => {
     try {
-      const res = await requestMyInfo(access_token);
+      const res = await fetchMyInfo(access_token);
       console.log(res.data);
       return res.data;
     } catch (e) {

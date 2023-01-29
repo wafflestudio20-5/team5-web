@@ -23,7 +23,6 @@ const NaverLoginPage = () => {
           console.log(e);
         }
       });
-    console.log(res);
   }, [navigate, dispatch]);
 
   //왜 getToken을 dependency array에??

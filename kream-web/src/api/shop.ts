@@ -1,12 +1,12 @@
 import axios from "axios";
 import { API_URL } from "../libs/urls";
 
-export const fetchShopProducts = async (pageNum: number) => {
+export const fetchShopProducts = async (page: number) => {
   try {
     const res = await axios.get(`${API_URL}/shop/productinfos/`, {
-      params: { page: pageNum },
+      params: { page: page },
     });
-    return res;
+    return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       console.log(e.response?.data.message);
@@ -17,7 +17,14 @@ export const fetchShopProducts = async (pageNum: number) => {
 
 export const fetchBrandName = async (id: number) => {
   try {
-    const res = await axios.get(`${API_URL}/shop/brands/${id}`);
+    const res = await axios.get(
+      process.env.NODE_ENV === "development"
+        ? `/shop/brands/${id}`
+        : `${API_URL}/shop/brands/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
     return res;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
@@ -38,6 +45,18 @@ export const fetchShopProductImages = async (id: number) => {
       }
     );
     return res;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data.message);
+    }
+    return null;
+  }
+};
+
+export const fetchBrands = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/shop/brands/`);
+    return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       console.log(e.response?.data.message);

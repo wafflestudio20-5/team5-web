@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../libs/urls";
-import { styleFeedExample } from "../../../data/styleFeedExample";
-import { StyleFeed } from "../../../types/styleFeed";
+
+import { StyleFeed } from "../../../types/style";
 import StyleFeedContent from "../style-feed-content";
 import StyleFeedThumbnail from "../style-feed-thumbnail";
 import {
@@ -14,58 +14,58 @@ import {
   StyledHashLink,
   Wrapper,
 } from "./style-feed-overview.styled";
+import { useQuery } from "@tanstack/react-query";
+import { fetchStyleFeed } from "../../../api/style";
+import CircularProgress from "@mui/material/CircularProgress";
+import { scrollWithOffset } from "../../../utils/HashLink";
+
+interface FetchedData {
+  previous?: string;
+  next?: string;
+  results: StyleFeed[];
+}
 
 const StyleFeedOverview = () => {
-  const [styleFeeds, setStyleFeeds] = useState([]);
+  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
+    queryKey: ["stylefeeds"],
+    queryFn: fetchStyleFeed,
+  });
 
-  const scrollWithOffset = (el: HTMLElement) => {
-    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
-    const yOffset = -110;
-    window.scrollTo({ top: yCoordinate + yOffset, behavior: "auto" });
-  };
-
-  useEffect(() => {
-    const stylefeed = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/styles/posts/`, {
-          params: { type: "latest" },
-        });
-        console.log(res);
-        return res;
-      } catch (e: unknown) {
-        if (axios.isAxiosError(e)) {
-          console.log(e.response?.data.message);
-        }
-        return null;
-      }
-    };
-    stylefeed();
-  }, []);
+  console.log(data);
 
   return (
     <Wrapper>
-      {/* <MasonryWrapper>
-        {styleFeeds.map((feed) => (
-          <StyledHashLink
-            key={feed.id}
-            to={`/style/details#${feed.id}`}
-            scroll={(el) => scrollWithOffset(el)}
-          >
-            <FeedWrapper>
-              <FeedImg>
-                <StyleFeedThumbnail thumbnail={feed.images[0]} />
-              </FeedImg>
-              <FeedContent>
-                <StyleFeedContent
-                  profile={feed.profile}
-                  nickname={feed.nickname}
-                  content={feed.content}
-                />
-              </FeedContent>
-            </FeedWrapper>
-          </StyledHashLink>
-        ))}
-      </MasonryWrapper> */}
+      <MasonryWrapper>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <div>
+            {data?.results.map((feed) => (
+              <FeedWrapper key={feed.id}>
+                <StyledHashLink
+                  to={`/style/details#${feed.id}`}
+                  scroll={(el) => scrollWithOffset(el)}
+                >
+                  <FeedImg>
+                    <StyleFeedThumbnail thumbnail={feed.images[0]} />
+                  </FeedImg>
+                </StyledHashLink>
+
+                <FeedContent>
+                  <StyleFeedContent
+                    id={feed.id}
+                    uid={feed.created_by.user_id}
+                    uimage={feed.created_by.image}
+                    nickname={feed.created_by.user_name}
+                    content={feed.content}
+                    likes={feed.num_likes}
+                  />
+                </FeedContent>
+              </FeedWrapper>
+            ))}
+          </div>
+        )}
+      </MasonryWrapper>
     </Wrapper>
   );
 };

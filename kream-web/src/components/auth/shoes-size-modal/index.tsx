@@ -9,20 +9,20 @@ import {
   ModalWrapper,
 } from "./shoes-size-modal.styled";
 
-import { ShoeSizeData } from "../../../data/styleFeedExample";
+import { ShoeSizeData } from "../../../data/shoesize";
 import React, { useState } from "react";
 
-interface ShoeSizeModal {
+interface ShoeSizeModalProps {
   shoeSize: number | string;
   setShoeSize: (size: number | string) => void;
   closeShoeSizeModal: () => void;
 }
 
-const ShoeSizeModal: React.FC<ShoeSizeModal> = ({
+const ShoeSizeModal = ({
   shoeSize,
   setShoeSize,
   closeShoeSizeModal,
-}) => {
+}: ShoeSizeModalProps) => {
   const [selected, setSelected] = useState(shoeSize);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

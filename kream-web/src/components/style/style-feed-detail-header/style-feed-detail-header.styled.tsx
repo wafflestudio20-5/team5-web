@@ -13,12 +13,14 @@ export const UserInfo = styled.div`
   display: flex;
   flex-direction: row;
   column-gap: 10px;
+  align-items: center;
 `;
 
 export const Profile = styled.img`
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  border: 1px solid rgba(34, 34, 34, 0.1);
 `;
 
 export const SubInfo = styled.div`
@@ -40,12 +42,22 @@ export const UploadDate = styled.p`
   margin: 0;
 `;
 
-export const FollowButton = styled.button`
+export const FollowButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FollowButton = styled.button<{
+  followed: boolean | string | null;
+}>`
   height: 30px;
   width: 82px;
-  background-color: black;
-  color: white;
-  border: 0;
+  background-color: ${(props) => (props.followed === true ? "white" : "black")};
+  color: ${(props) =>
+    props.followed === true ? "rgba(34,34,34,.8)" : "white"};
+  border: ${(props) =>
+    props.followed === true ? "1px solid #d3d3d3" : "1px solid black"};
   border-radius: 8px;
   font-size: 12px;
 `;

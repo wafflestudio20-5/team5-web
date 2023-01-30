@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { styleFeedExample } from "../../../data/styleFeedExample";
-import { StyleFeed } from "../../../types/styleFeed";
+
+import { StyleFeed } from "../../../types/style";
 import StyleFeedDetailHeader from "../style-feed-detail-header";
 import StyleFeedImages from "../style-feed-images";
 import {
@@ -22,65 +22,88 @@ import CommentIcon from "../../../assets/comment-icon.svg";
 import FollowedIcon from "../../../assets/followed-icon.svg";
 
 import StyleFeedDetailContent from "../style-feed-detail-content";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { fetchStyleFeed } from "../../../api/style";
+import CircularProgress from "@mui/material/CircularProgress";
+
+interface FetchedData {
+  previous?: string;
+  next?: string;
+  results: StyleFeed[];
+}
 
 const StyleFeedDetails = () => {
-  const defaultStyleFeeds: StyleFeed[] = styleFeedExample;
-  const [styleFeeds, setStyleFeeds] = useState(defaultStyleFeeds);
+  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
+    queryKey: ["stylefeeds"],
+    queryFn: fetchStyleFeed,
+  });
+
   const [follow, setFollow] = useState(false);
 
   return (
     <Wrapper>
-      {styleFeeds.map((feed) => (
-        <FeedWrapper key={feed.id} id={feed.id.toString()}>
-          <StyleFeedDetailHeader
-            profile={feed.profile}
-            nickname={feed.nickname}
-          />
-          <FeedImageWrapper>
-            <StyleFeedImages images={feed.images} />
-          </FeedImageWrapper>
-          <FeedItemTagWrapper>
-            <FeedItemTagInfo>
-              상품 태그 <strong>2</strong>개
-            </FeedItemTagInfo>
-          </FeedItemTagWrapper>
-          <FeedContentWrapper>
-            <FeedContentIconWrapper>
-              {!follow ? (
-                <img
-                  onClick={() => setFollow((prev) => !prev)}
-                  alt="smile-icon"
-                  style={{ width: "32px", height: "32px" }}
-                  src={SmileIcon}
-                />
-              ) : (
-                <img
-                  onClick={() => setFollow((prev) => !prev)}
-                  alt="followed-icon"
-                  style={{ width: "32px", height: "32px" }}
-                  src={FollowedIcon}
-                />
-              )}
-              <img
-                alt="comment-icon"
-                style={{ width: "32px", height: "32px" }}
-                src={CommentIcon}
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <div>
+          {data?.results.map((feed) => (
+            <FeedWrapper key={feed.id} id={feed.id.toString()}>
+              <StyleFeedDetailHeader
+                uimage={feed.created_by.image}
+                nickname={feed.created_by.user_name}
+                created={feed.created_at}
+                followed={feed.created_by.following}
               />
-            </FeedContentIconWrapper>
-            <FeedLikesInfo>
-              공감 <strong>10</strong>개
-            </FeedLikesInfo>
-            <FeedContentTextWrapper>
-              <StyleFeedDetailContent content={feed.content} />
-            </FeedContentTextWrapper>
-            <FeedCommentWrapper>
-              <FeedCommentInfo>
-                댓글 <strong>1</strong>개
-              </FeedCommentInfo>
-            </FeedCommentWrapper>
-          </FeedContentWrapper>
-        </FeedWrapper>
-      ))}
+              <FeedImageWrapper>
+                <StyleFeedImages images={feed.images} />
+              </FeedImageWrapper>
+              <FeedItemTagWrapper>
+                <FeedItemTagInfo>
+                  상품 태그 <strong>2</strong>개
+                </FeedItemTagInfo>
+              </FeedItemTagWrapper>
+              <FeedContentWrapper>
+                <FeedContentIconWrapper>
+                  {!follow ? (
+                    <img
+                      onClick={() => setFollow((prev) => !prev)}
+                      alt="smile-icon"
+                      style={{ width: "32px", height: "32px" }}
+                      src={SmileIcon}
+                    />
+                  ) : (
+                    <img
+                      onClick={() => setFollow((prev) => !prev)}
+                      alt="followed-icon"
+                      style={{ width: "32px", height: "32px" }}
+                      src={FollowedIcon}
+                    />
+                  )}
+                  <img
+                    alt="comment-icon"
+                    style={{ width: "32px", height: "32px" }}
+                    src={CommentIcon}
+                  />
+                </FeedContentIconWrapper>
+                <FeedLikesInfo>
+                  공감 <strong>{feed.num_likes}</strong>개
+                </FeedLikesInfo>
+                <FeedContentTextWrapper>
+                  <StyleFeedDetailContent content={feed.content} />
+                </FeedContentTextWrapper>
+                {feed.num_comments > 0 ? (
+                  <FeedCommentWrapper>
+                    <FeedCommentInfo>
+                      댓글 <strong>{feed.num_comments}</strong>개
+                    </FeedCommentInfo>
+                  </FeedCommentWrapper>
+                ) : null}
+              </FeedContentWrapper>
+            </FeedWrapper>
+          ))}
+        </div>
+      )}
     </Wrapper>
   );
 };

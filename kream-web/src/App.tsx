@@ -13,26 +13,33 @@ import GoogleLoginPage from "./pages/google-login-page";
 import MyPage from "./pages/my-page";
 import MyInfoPage from "./pages/my-info-page";
 import ShopPage from "./pages/shop-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/login/find_password" element={<FindPasswordPage />} />
-          <Route path="/login/naver_login" element={<NaverLoginPage />} />
-          <Route path="/login/google_login" element={<GoogleLoginPage />} />
-          <Route path="/join" element={<SignUpPage />} />
-          <Route path="/join/email_sent" element={<SignUpEmailSentPage />} />
-          <Route path="/my" element={<MyPage />} />
-          <Route path="/my/profile" element={<MyInfoPage />} />
-          <Route path="/style" element={<StylePage />} />
-          <Route path="/style/details" element={<StyleDetailPage />} />
-          <Route path="/shop" element={<ShopPage />} />
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login/find_password" element={<FindPasswordPage />} />
+            <Route path="/login/naver_login" element={<NaverLoginPage />} />
+            <Route path="/login/google_login" element={<GoogleLoginPage />} />
+            <Route path="/join" element={<SignUpPage />} />
+            <Route path="/join/email_sent" element={<SignUpEmailSentPage />} />
+            <Route path="/my" element={<MyPage />} />
+            <Route path="/my/profile" element={<MyInfoPage />} />
+            <Route path="/style" element={<StylePage />} />
+            <Route path="/style/details" element={<StyleDetailPage />} />
+            <Route path="/shop" element={<ShopPage />} />
+          </Routes>
+          <ReactQueryDevtools initialIsOpen={true} />
+        </BrowserRouter>
+      </QueryClientProvider>
     </div>
   );
 }

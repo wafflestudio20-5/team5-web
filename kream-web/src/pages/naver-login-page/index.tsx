@@ -12,7 +12,7 @@ const NaverLoginPage = () => {
   const getToken = useCallback(() => {
     const token = window.location.href.split("=")[1].split("&")[0];
 
-    const res = dispatch(naverLogin(token))
+    dispatch(naverLogin(token))
       .unwrap()
       .then((res) => {
         console.log(res);

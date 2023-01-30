@@ -9,3 +9,8 @@ export interface shopProduct {
   shares: number;
   wishes: number;
 }
+
+export interface Brands {
+  id: number;
+  name: string;
+}

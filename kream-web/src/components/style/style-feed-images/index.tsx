@@ -11,11 +11,11 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useEffect, useState } from "react";
 
-interface StyleFeedImages {
+interface StyleFeedImagesProps {
   images: string[];
 }
 
-const StyleFeedImages: React.FC<StyleFeedImages> = ({ images }) => {
+const StyleFeedImages = ({ images }: StyleFeedImagesProps) => {
   const [current, setCurrent] = useState(0);
   const [style, setStyle] = useState({ marginLeft: "0%" });
   const [hover, setHover] = useState(false);

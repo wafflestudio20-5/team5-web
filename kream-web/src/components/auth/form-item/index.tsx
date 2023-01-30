@@ -9,7 +9,7 @@ import {
 } from "./form-item.styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-interface FormItem {
+interface FormItemProps {
   name: string;
   type?: string;
   label: string;
@@ -20,7 +20,7 @@ interface FormItem {
   handleClickInput?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const FormItem: React.FC<FormItem> = ({
+const FormItem = ({
   name,
   type,
   label,
@@ -29,7 +29,7 @@ const FormItem: React.FC<FormItem> = ({
   validated,
   handleChangeContent,
   handleClickInput,
-}: FormItem) => {
+}: FormItemProps) => {
   return (
     <InputWrapper>
       <InputLabel validated={validated}>{label}</InputLabel>

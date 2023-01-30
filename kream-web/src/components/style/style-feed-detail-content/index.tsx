@@ -5,13 +5,11 @@ import {
   Wrapper,
 } from "./style-feed-detail-content.styled";
 
-interface StyleFeedDetailContent {
+interface StyleFeedDetailContentProps {
   content: string;
 }
 
-const StyleFeedDetailContent: React.FC<StyleFeedDetailContent> = ({
-  content,
-}) => {
+const StyleFeedDetailContent = ({ content }: StyleFeedDetailContentProps) => {
   const [opened, setOpened] = useState(false);
   useEffect(() => {
     if (content.length < 10 && !content.includes("\n")) {

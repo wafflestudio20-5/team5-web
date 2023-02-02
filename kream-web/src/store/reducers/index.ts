@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import profileReducer from "./profileReducer";
 import sessionReducer from "./sessionReducer";
-import shopReducer from "./shopReducer";
+import shopfilterReducer from "./shopfilterReducer";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   profile: profileReducer,
-  shop: shopReducer,
+  shopfilter: shopfilterReducer,
 });
 
 export default rootReducer;

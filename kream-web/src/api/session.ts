@@ -19,17 +19,16 @@ export const requestLogin = async ({ email, password }: LoginRequest) => {
 export const requestNaverlogin = async (token: string) => {
   const res = await axios.get(`${API_URL}/accounts/social/naver/`, {
     params: { token: token },
+    withCredentials: true,
   });
 
   return res;
 };
 
-export const requestRefresh = async (refresh_token: string) => {
+export const requestRefresh = async () => {
   const res = await axios.post(
     `${API_URL}/accounts/token/refresh`,
-    {
-      refresh: refresh_token,
-    },
+
     { withCredentials: true }
   );
   return res;

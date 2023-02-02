@@ -47,3 +47,9 @@ export const FilterMenuWrapper = styled.div`
   row-gap: 5px;
   overflow-y: auto;
 `;
+
+export const FilterMenuListWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 5px;
+`;

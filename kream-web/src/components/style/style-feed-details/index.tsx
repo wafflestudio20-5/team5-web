@@ -24,8 +24,9 @@ import FollowedIcon from "../../../assets/followed-icon.svg";
 import StyleFeedDetailContent from "../style-feed-detail-content";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { fetchStyleFeed } from "../../../api/style";
+import { fetchAllStyleFeed } from "../../../api/style";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAppSelector } from "../../../store/hooks";
 
 interface FetchedData {
   previous?: string;
@@ -34,9 +35,11 @@ interface FetchedData {
 }
 
 const StyleFeedDetails = () => {
+  const { accessToken } = useAppSelector((state) => state.session);
+  const pageParam = null;
   const { data, isLoading } = useQuery<FetchedData, AxiosError>({
-    queryKey: ["stylefeeds"],
-    queryFn: fetchStyleFeed,
+    queryKey: ["stylefeeds", accessToken],
+    queryFn: () => fetchAllStyleFeed({ accessToken, pageParam }),
   });
 
   const [follow, setFollow] = useState(false);
@@ -50,6 +53,7 @@ const StyleFeedDetails = () => {
           {data?.results.map((feed) => (
             <FeedWrapper key={feed.id} id={feed.id.toString()}>
               <StyleFeedDetailHeader
+                uid={feed.created_by.user_id}
                 uimage={feed.created_by.image}
                 nickname={feed.created_by.user_name}
                 created={feed.created_at}

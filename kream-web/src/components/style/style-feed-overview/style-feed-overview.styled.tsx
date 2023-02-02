@@ -19,12 +19,13 @@ export const StyledHashLink = styled(HashLink)`
 `;
 
 export const MasonryWrapper = styled.div`
-  column-count: 4;
-  column-gap: 1em;
+  display: grid;
+  grid-gap: 2%;
+  grid-template-columns: repeat(4, 23.5%);
 `;
 
 export const FeedWrapper = styled.div`
-  display: inline-flex;
+  display: flex;
   width: 100%;
   flex-direction: column;
   margin-bottom: 3rem;

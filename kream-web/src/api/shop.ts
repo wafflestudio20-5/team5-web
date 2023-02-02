@@ -1,11 +1,34 @@
 import axios from "axios";
 import { API_URL } from "../libs/urls";
+import { Brands, Categories } from "../types/shop";
 
-export const fetchShopProducts = async (page: number) => {
+interface ShopProducts {
+  pageParam: number;
+  brand: Brands[];
+  category: Categories | null;
+}
+
+export const fetchAllShopProducts = async ({
+  pageParam,
+  brand,
+  category,
+}: ShopProducts) => {
   try {
-    const res = await axios.get(`${API_URL}/shop/productinfos/`, {
-      params: { page: page },
-    });
+    let brandList = "";
+    if (brand.length > 0) {
+      for (let i = 0; i < brand.length; i++) {
+        brandList += `&brand_id=${brand[i].id}`;
+      }
+    } else {
+      brandList = "";
+    }
+    let categoryList = "";
+    if (category) {
+      categoryList = `&category=${category.engName}`;
+    }
+    const res = await axios.get(
+      `${API_URL}/shop/productinfos/?page=${pageParam}${categoryList}${brandList}`
+    );
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
@@ -15,36 +38,17 @@ export const fetchShopProducts = async (page: number) => {
   }
 };
 
-export const fetchBrandName = async (id: number) => {
+export const fetchShopProduct = async (id: string | undefined) => {
   try {
     const res = await axios.get(
       process.env.NODE_ENV === "development"
-        ? `/shop/brands/${id}`
-        : `${API_URL}/shop/brands/${id}`,
+        ? `/shop/productinfos/${id}`
+        : `${API_URL}/shop/productinfos/${id}`,
       {
         withCredentials: true,
       }
     );
-    return res;
-  } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
-      console.log(e.response?.data.message);
-    }
-    return null;
-  }
-};
-
-export const fetchShopProductImages = async (id: number) => {
-  try {
-    const res = await axios.get(
-      process.env.NODE_ENV === "development"
-        ? `/shop/productinfos/${id}/images`
-        : `${API_URL}/shop/productinfos/${id}/images`,
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
+    return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       console.log(e.response?.data.message);

@@ -15,6 +15,7 @@ import MyInfoPage from "./pages/my-info-page";
 import ShopPage from "./pages/shop-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ShopDetailPage from "./pages/shop-detail-page";
 
 function App() {
   const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ function App() {
             <Route path="/style" element={<StylePage />} />
             <Route path="/style/details" element={<StyleDetailPage />} />
             <Route path="/shop" element={<ShopPage />} />
+            <Route path="/shop/details/:id" element={<ShopDetailPage />} />
           </Routes>
           <ReactQueryDevtools initialIsOpen={true} />
         </BrowserRouter>

@@ -48,7 +48,7 @@ export const PagePart = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
-  column-gap: 50%;
+  column-gap: 30%;
 `;
 
 export const OtherFont = styled.p`

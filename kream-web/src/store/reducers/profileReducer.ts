@@ -3,10 +3,9 @@ import { fetchMyInfo } from "../../api/profile";
 
 export const getMyInfo = createAsyncThunk(
   "profile/myInfo",
-  async (access_token: string, { rejectWithValue }) => {
+  async (access_token: string | null, { rejectWithValue }) => {
     try {
       const res = await fetchMyInfo(access_token);
-      console.log(res.data);
       return res.data;
     } catch (e) {
       rejectWithValue(e);

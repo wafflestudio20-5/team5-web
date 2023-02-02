@@ -16,7 +16,7 @@ const NaverLoginPage = () => {
       .unwrap()
       .then((res) => {
         console.log(res);
-        navigate("/");
+        navigate(-3);
       })
       .catch((e) => {
         if (axios.isAxiosError(e)) {

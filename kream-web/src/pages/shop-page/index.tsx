@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { fetchShopProducts } from "../../api/shop";
+import { useMemo, useState } from "react";
+import { fetchAllShopProducts } from "../../api/shop";
 import Header from "../../components/header";
 import ShopProduct from "../../components/shop/shop-product";
-import { shopProduct } from "../../types/shop";
+import { Brands, Categories, shopProduct } from "../../types/shop";
 import {
   DeleteFilterButton,
   FilterHeader,
@@ -13,56 +13,48 @@ import {
   Wrapper,
 } from "./shop-page.styled";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import ShopFilter from "../../components/shop/shop-filter";
+import ShopBrandFilter from "../../components/shop/shop-brand-filter";
+import ShopCategoryFilter from "../../components/shop/shop-category-filter";
+import { useIntersect } from "../../hooks/useIntersect";
 
 interface FetchedData {
   count: number;
-  previous?: string;
-  next?: string;
+  previous: string;
+  next: string;
   results: shopProduct[];
 }
 
 const ShopPage = () => {
-  const [products, setProducts] = useState<shopProduct[]>([]);
-  const [page, setPage] = useState(1);
-  // const [hasNextPage, setNextPage] = useState(true);
-  // const [isFetching, setFetching] = useState(false);
+  const [brand, setBrand] = useState<Brands[]>([]);
+  const [category, setCategory] = useState<Categories | null>(null);
 
-  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
-    queryKey: ["shopproducts", page],
-    queryFn: () => fetchShopProducts(page),
+  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
+    FetchedData,
+    AxiosError
+  >(
+    ["allShopProducts", brand, category],
+    ({ pageParam = 1 }) => fetchAllShopProducts({ pageParam, brand, category }),
+    {
+      getNextPageParam: ({ next }) =>
+        next?.length > 0
+          ? Number(next.split("page")[1].split("&")[0].slice(1))
+          : undefined,
+    }
+  );
+
+  const products = useMemo(
+    () => (data ? data.pages.flatMap((data) => data.results) : []),
+    [data]
+  );
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
   });
-
-  // const getProducts = useCallback(async () => {
-  //   const res = await fetchShopProducts(page);
-  //   setPage((prev) => prev + 1);
-  //   setProducts((prev) => [...prev, ...res?.data.results]);
-  //   setNextPage(res?.data.next ? true : false);
-  //   setFetching(false);
-  // }, [page]);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const { scrollTop, offsetHeight } = document.documentElement;
-  //     if (window.innerHeight + scrollTop >= offsetHeight) {
-  //       setFetching(true);
-  //     }
-  //   };
-  //   setFetching(true);
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isFetching && hasNextPage) {
-  //     getProducts();
-  //   } else if (!hasNextPage) {
-  //     setFetching(false);
-  //   }
-  // }, [isFetching]);
-
   return (
     <>
       <Header />
@@ -77,17 +69,25 @@ const ShopPage = () => {
             </FilterHeader>
             <DeleteFilterButton>모두 삭제</DeleteFilterButton>
           </FilterHeaderWrapper>
-          <ShopFilter filterName="카테고리" />
-          <ShopFilter filterName="브랜드" />
-          <ShopFilter filterName="가격" />
+          <ShopCategoryFilter
+            filterName="카테고리"
+            filterType={category}
+            setFilterType={setCategory}
+          />
+          <ShopBrandFilter
+            filterName="브랜드"
+            filterType={brand}
+            setFilterType={setBrand}
+          />
         </FilterWrapper>
         <ProductWrapper>
-          {data?.results.map((product) => (
+          {products.map((product) => (
             <div key={product.id}>
               <ShopProduct product={product} />
             </div>
           ))}
-          {isLoading && <CircularProgress />}
+          {isFetching && hasNextPage && <CircularProgress />}
+          <div style={{ height: "1px" }} ref={ref}></div>
         </ProductWrapper>
       </Wrapper>
     </>

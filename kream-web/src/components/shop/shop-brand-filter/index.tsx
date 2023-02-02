@@ -1,21 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { fetchBrands } from "../../../api/shop";
 import { Brands } from "../../../types/shop";
 
 import {
   FilterContent,
+  FilterMenuListWrapper,
   FilterMenuWrapper,
   FilterTextWrapper,
   FilterTitle,
   FilterTitleWrapper,
   OpenCloseButton,
   Wrapper,
-} from "./shop-filter.styled";
+} from "./shop-brand-filter.styled";
 
 interface ShopFilterProps {
   filterName: string;
+  filterType: Brands[];
+  setFilterType: Dispatch<SetStateAction<Brands[]>>;
 }
 
 interface FetchedData {
@@ -25,13 +28,25 @@ interface FetchedData {
   results: Brands[];
 }
 
-const ShopFilter = ({ filterName }: ShopFilterProps) => {
+const ShopBrandFilter = ({
+  filterName,
+  filterType,
+  setFilterType,
+}: ShopFilterProps) => {
   const [open, setOpen] = useState(false);
 
-  const { data } = useQuery<FetchedData, AxiosError>({
+  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
     queryKey: ["shopbrands"],
     queryFn: fetchBrands,
   });
+
+  const handleClickCheckBox = (item: Brands) => {
+    if (filterType.includes(item)) {
+      setFilterType((prev) => prev.filter((el) => el !== item));
+    } else {
+      setFilterType((prev) => [...prev, item]);
+    }
+  };
 
   return (
     <Wrapper>
@@ -46,18 +61,15 @@ const ShopFilter = ({ filterName }: ShopFilterProps) => {
       </FilterTitleWrapper>
       {open ? (
         <FilterMenuWrapper>
-          {data?.results.map((brand) => (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                columnGap: "10px",
-              }}
-              key={brand.id}
-            >
-              <input type="checkbox" value={brand.name} />
-              <div>{brand.name}</div>
-            </div>
+          {data?.results.map((item) => (
+            <FilterMenuListWrapper key={item.id}>
+              <input
+                onChange={() => handleClickCheckBox(item)}
+                type="checkbox"
+                checked={filterType.includes(item) ? true : false}
+              />
+              <div style={{ fontSize: "14px" }}>{item.name}</div>
+            </FilterMenuListWrapper>
           ))}
         </FilterMenuWrapper>
       ) : null}
@@ -65,4 +77,4 @@ const ShopFilter = ({ filterName }: ShopFilterProps) => {
   );
 };
 
-export default ShopFilter;
+export default ShopBrandFilter;

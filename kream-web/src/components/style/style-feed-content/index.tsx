@@ -55,7 +55,9 @@ const StyleFeedContent = ({
         to={`/style/details#${id}`}
         scroll={(el) => scrollWithOffset(el)}
       >
-        <Content>{content}</Content>
+        <Content>
+          {content.length > 27 ? content.slice(0, 27) + "..." : content}
+        </Content>
       </StyledHashLink>
     </Wrapper>
   );

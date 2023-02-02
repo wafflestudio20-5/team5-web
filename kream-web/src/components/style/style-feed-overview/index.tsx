@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../libs/urls";
 
@@ -14,58 +14,87 @@ import {
   StyledHashLink,
   Wrapper,
 } from "./style-feed-overview.styled";
-import { useQuery } from "@tanstack/react-query";
-import { fetchStyleFeed } from "../../../api/style";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { fetchAllStyleFeed } from "../../../api/style";
 import CircularProgress from "@mui/material/CircularProgress";
 import { scrollWithOffset } from "../../../utils/HashLink";
+import { useAppSelector } from "../../../store/hooks";
+import { useIntersect } from "../../../hooks/useIntersect";
 
 interface FetchedData {
-  previous?: string;
-  next?: string;
+  previous: string | null;
+  next: string | null;
   results: StyleFeed[];
 }
 
 const StyleFeedOverview = () => {
-  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
-    queryKey: ["stylefeeds"],
-    queryFn: fetchStyleFeed,
-  });
+  const { accessToken } = useAppSelector((state) => state.session);
 
-  console.log(data);
+  // const { data, isLoading } = useQuery<FetchedData, AxiosError>({
+  //   queryKey: ["stylefeeds", accessToken],
+  //   queryFn: () => fetchAllStyleFeed(accessToken),
+  // });
+
+  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
+    FetchedData,
+    AxiosError
+  >(
+    ["allShopProducts", accessToken],
+    ({ pageParam = "" }) => fetchAllStyleFeed({ pageParam, accessToken }),
+    {
+      getNextPageParam: ({ next }) =>
+        next
+          ? next.length > 0
+            ? next.split("cursor")[1].split("&")[0].slice(1)
+            : undefined
+          : undefined,
+    }
+  );
+
+  const feeds = useMemo(
+    () => (data ? data.pages.flatMap((data) => data.results) : []),
+    [data]
+  );
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
 
   return (
     <Wrapper>
-      <MasonryWrapper>
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
-          <div>
-            {data?.results.map((feed) => (
-              <FeedWrapper key={feed.id}>
-                <StyledHashLink
-                  to={`/style/details#${feed.id}`}
-                  scroll={(el) => scrollWithOffset(el)}
-                >
-                  <FeedImg>
-                    <StyleFeedThumbnail thumbnail={feed.images[0]} />
-                  </FeedImg>
-                </StyledHashLink>
+      {isFetching ? (
+        <CircularProgress />
+      ) : (
+        <MasonryWrapper>
+          {feeds.map((feed) => (
+            <FeedWrapper key={feed.id}>
+              <StyledHashLink
+                to={`/style/details#${feed.id}`}
+                scroll={(el) => scrollWithOffset(el)}
+              >
+                <FeedImg>
+                  <StyleFeedThumbnail thumbnail={feed.images[0]} />
+                </FeedImg>
+              </StyledHashLink>
 
-                <FeedContent>
-                  <StyleFeedContent
-                    id={feed.id}
-                    uid={feed.created_by.user_id}
-                    uimage={feed.created_by.image}
-                    nickname={feed.created_by.user_name}
-                    content={feed.content}
-                    likes={feed.num_likes}
-                  />
-                </FeedContent>
-              </FeedWrapper>
-            ))}
-          </div>
-        )}
-      </MasonryWrapper>
+              <FeedContent>
+                <StyleFeedContent
+                  id={feed.id}
+                  uid={feed.created_by.user_id}
+                  uimage={feed.created_by.image}
+                  nickname={feed.created_by.user_name}
+                  content={feed.content}
+                  likes={feed.num_likes}
+                />
+              </FeedContent>
+            </FeedWrapper>
+          ))}
+          <div style={{ height: "1px" }} ref={ref}></div>
+        </MasonryWrapper>
+      )}
     </Wrapper>
   );
 };

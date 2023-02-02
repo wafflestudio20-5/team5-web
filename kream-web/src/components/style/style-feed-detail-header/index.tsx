@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   FollowButton,
   FollowButtonWrapper,
@@ -11,8 +11,12 @@ import {
 } from "./style-feed-detail-header.styled";
 import PersonIcon from "../../../assets/person-icon.svg";
 import moment from "moment";
+import { useAppSelector } from "../../../store/hooks";
+import { useNavigate } from "react-router-dom";
+import { follow } from "../../../api/style";
 
 interface StyleFeedDetailHeaderProps {
+  uid: number;
   uimage: string | null;
   nickname: string;
   created: string;
@@ -20,6 +24,7 @@ interface StyleFeedDetailHeaderProps {
 }
 
 const StyleFeedDetailHeader = ({
+  uid,
   uimage,
   nickname,
   created,
@@ -27,7 +32,20 @@ const StyleFeedDetailHeader = ({
 }: StyleFeedDetailHeaderProps) => {
   require("moment");
   require("moment/locale/ko");
+  const navigate = useNavigate();
+  const { accessToken } = useAppSelector((state) => state.session);
+  const requestFollow = useCallback(async () => {
+    const res = await follow({ uid, accessToken });
+    console.log(res);
+  }, [accessToken, uid]);
 
+  const handleFollow = () => {
+    if (accessToken) {
+      requestFollow();
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <Wrapper>
       <UserInfo>
@@ -41,7 +59,7 @@ const StyleFeedDetailHeader = ({
         </SubInfo>
       </UserInfo>
       <FollowButtonWrapper>
-        <FollowButton followed={followed}>
+        <FollowButton onClick={handleFollow} followed={followed}>
           {followed === true ? "팔로잉" : "팔로우"}
         </FollowButton>
       </FollowButtonWrapper>

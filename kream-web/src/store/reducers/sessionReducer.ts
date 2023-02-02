@@ -33,9 +33,9 @@ export const naverLogin = createAsyncThunk(
 
 export const refresh = createAsyncThunk(
   "session/refresh",
-  async (refresh_token: string, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await requestRefresh(refresh_token);
+      const res = await requestRefresh();
 
       return res.data;
     } catch (e) {
@@ -45,29 +45,41 @@ export const refresh = createAsyncThunk(
 );
 
 export interface sessionState {
-  access_token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 const sessionInitialState: sessionState = {
-  access_token: null,
+  accessToken: localStorage.getItem("access_token"),
+  refreshToken: localStorage.getItem("refresh_token"),
 };
 
 const sessionReducer = createSlice({
   name: "sessionReducer",
   initialState: sessionInitialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.accessToken = null;
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      state.access_token = action.payload.access_token;
+      state.accessToken = action.payload.access_token;
+      state.refreshToken = action.payload.refresh_token;
       localStorage.setItem("refresh_token", action.payload.refresh_token);
+      localStorage.setItem("access_token", action.payload.access_token);
     });
     builder.addCase(naverLogin.fulfilled, (state, action) => {
-      state.access_token = action.payload.access_token;
+      state.accessToken = action.payload.access_token;
+      state.refreshToken = action.payload.refresh_token;
       localStorage.setItem("refresh_token", action.payload.refresh_token);
+      localStorage.setItem("access_token", action.payload.access_token);
     });
     builder.addCase(refresh.fulfilled, (state, action) => {
-      state.access_token = action.payload.access_token;
-      localStorage.setItem("refresh_token", action.payload.refresh_token);
+      state.accessToken = action.payload.access;
+      localStorage.setItem("access_token", action.payload.access);
     });
   },
 });

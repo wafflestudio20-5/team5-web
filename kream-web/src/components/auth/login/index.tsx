@@ -23,11 +23,13 @@ import NaverLogin from "../naver-login";
 import GoogleLogin from "../google-login";
 import { login } from "../../../store/reducers/sessionReducer";
 import { StyledLink } from "../../../utils/StyledComponents";
+import { useAppDispatch } from "../../../store/hooks";
 
 const Login = () => {
   // const naverRef = useRef();
   // const googleRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -67,8 +69,8 @@ const Login = () => {
   // };
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
-    const response = login({ email, password });
-    // if(response.status)
+    const response = dispatch(login({ email, password }));
+    console.log(response);
     navigate("/");
   };
 

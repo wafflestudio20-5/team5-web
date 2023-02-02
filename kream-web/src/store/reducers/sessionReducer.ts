@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  requestGooglelogin,
   requestLogin,
   requestNaverlogin,
   requestRefresh,
@@ -23,6 +24,19 @@ export const naverLogin = createAsyncThunk(
   async (token: string, { rejectWithValue }) => {
     try {
       const res = await requestNaverlogin(token);
+
+      return res.data;
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+export const googleLogin = createAsyncThunk(
+  "session/googleLogin",
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const res = await requestGooglelogin(token);
 
       return res.data;
     } catch (e) {
@@ -72,6 +86,12 @@ const sessionReducer = createSlice({
       localStorage.setItem("access_token", action.payload.access_token);
     });
     builder.addCase(naverLogin.fulfilled, (state, action) => {
+      state.accessToken = action.payload.access_token;
+      state.refreshToken = action.payload.refresh_token;
+      localStorage.setItem("refresh_token", action.payload.refresh_token);
+      localStorage.setItem("access_token", action.payload.access_token);
+    });
+    builder.addCase(googleLogin.fulfilled, (state, action) => {
       state.accessToken = action.payload.access_token;
       state.refreshToken = action.payload.refresh_token;
       localStorage.setItem("refresh_token", action.payload.refresh_token);

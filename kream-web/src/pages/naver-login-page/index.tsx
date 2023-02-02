@@ -8,7 +8,6 @@ const NaverLoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  //useCallback 이렇게 쓰는거 맞낭..
   const getToken = useCallback(() => {
     const token = window.location.href.split("=")[1].split("&")[0];
 
@@ -16,7 +15,7 @@ const NaverLoginPage = () => {
       .unwrap()
       .then((res) => {
         console.log(res);
-        navigate(-3);
+        navigate("/");
       })
       .catch((e) => {
         if (axios.isAxiosError(e)) {
@@ -25,7 +24,6 @@ const NaverLoginPage = () => {
       });
   }, [navigate, dispatch]);
 
-  //왜 getToken을 dependency array에??
   useEffect(() => {
     window.location.href.includes("access_token") && getToken();
   }, [getToken]);

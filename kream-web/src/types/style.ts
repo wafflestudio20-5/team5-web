@@ -17,3 +17,26 @@ export interface StyleFeedUser {
   image: string | null;
   following: string | boolean | null;
 }
+
+export interface StyleFeedReplyUser {
+  user_id: number;
+  profile_name: string;
+}
+
+export interface StyleFeedReply {
+  id: number;
+  content: string;
+  to_profile: StyleFeedReplyUser;
+  created_by: StyleFeedUser;
+  created_at: string;
+  num_likes: number;
+  liked: boolean;
+}
+
+export interface StyleFeedComment {
+  id: number;
+  content: string;
+  created_by: StyleFeedUser;
+  created_at: string;
+  replies: StyleFeedReply[];
+}

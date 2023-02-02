@@ -67,8 +67,9 @@ const SignUp = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const repassword = password;
-    const response = signup({ email, password, repassword, shoes });
-    navigate("email_sent");
+    const res = signup({ email, password, repassword, shoes });
+    console.log(res);
+    navigate("/login");
   };
   return (
     <>

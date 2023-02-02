@@ -1,15 +1,22 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchAllShopProducts } from "../../api/shop";
 import Header from "../../components/header";
 import ShopProduct from "../../components/shop/shop-product";
 import { Brands, Categories, shopProduct } from "../../types/shop";
 import {
   DeleteFilterButton,
+  DeliveryTagChip,
+  DeliveryTagWrapper,
   FilterHeader,
   FilterHeaderWrapper,
   FilterStatus,
   FilterWrapper,
   ProductWrapper,
+  RightSideWrapper,
+  SelectedFilter,
+  SelectedFilterCloseButton,
+  SelectedFilterName,
+  SelectedFilterWrapper,
   Wrapper,
 } from "./shop-page.styled";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,6 +25,8 @@ import { AxiosError } from "axios";
 import ShopBrandFilter from "../../components/shop/shop-brand-filter";
 import ShopCategoryFilter from "../../components/shop/shop-category-filter";
 import { useIntersect } from "../../hooks/useIntersect";
+import { DeliveryTagList } from "../../data/delivertyTagList";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface FetchedData {
   count: number;
@@ -27,15 +36,18 @@ interface FetchedData {
 }
 
 const ShopPage = () => {
+  const [filters, setFliters] = useState<string[]>([]);
   const [brand, setBrand] = useState<Brands[]>([]);
   const [category, setCategory] = useState<Categories | null>(null);
+  const [delivery, setDelivery] = useState<Categories | null>(null);
 
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
     FetchedData,
     AxiosError
   >(
-    ["allShopProducts", brand, category],
-    ({ pageParam = 1 }) => fetchAllShopProducts({ pageParam, brand, category }),
+    ["allShopProducts", brand, category, delivery],
+    ({ pageParam = 1 }) =>
+      fetchAllShopProducts({ pageParam, brand, category, delivery }),
     {
       getNextPageParam: ({ next }) =>
         next?.length > 0
@@ -55,6 +67,7 @@ const ShopPage = () => {
       fetchNextPage();
     }
   });
+
   return (
     <>
       <Header />
@@ -80,15 +93,51 @@ const ShopPage = () => {
             setFilterType={setBrand}
           />
         </FilterWrapper>
-        <ProductWrapper>
-          {products.map((product) => (
-            <div key={product.id}>
-              <ShopProduct product={product} />
-            </div>
-          ))}
-          {isFetching && hasNextPage && <CircularProgress />}
-          <div style={{ height: "1px" }} ref={ref}></div>
-        </ProductWrapper>
+        <RightSideWrapper>
+          <DeliveryTagWrapper>
+            {DeliveryTagList.map((tag) => (
+              <DeliveryTagChip
+                key={tag.id}
+                number={tag.id}
+                selected={tag === delivery}
+                onClick={() => setDelivery(tag)}
+              >
+                {tag.korName}
+              </DeliveryTagChip>
+            ))}
+          </DeliveryTagWrapper>
+          <SelectedFilterWrapper>
+            {brand.map((item) => (
+              <SelectedFilter key={item.id}>
+                <SelectedFilterName>{item.name}</SelectedFilterName>
+                <SelectedFilterCloseButton
+                  onClick={() =>
+                    setBrand((prev) => prev.filter((el) => el !== item))
+                  }
+                >
+                  <CloseIcon sx={{ width: "12px", height: "12px" }} />
+                </SelectedFilterCloseButton>
+              </SelectedFilter>
+            ))}
+            {category ? (
+              <SelectedFilter>
+                <SelectedFilterName>{category.korName}</SelectedFilterName>
+                <SelectedFilterCloseButton onClick={() => setCategory(null)}>
+                  <CloseIcon sx={{ width: "12px", height: "12px" }} />
+                </SelectedFilterCloseButton>
+              </SelectedFilter>
+            ) : null}
+          </SelectedFilterWrapper>
+          <ProductWrapper>
+            {products.map((product) => (
+              <div key={product.id}>
+                <ShopProduct product={product} />
+              </div>
+            ))}
+            {isFetching && hasNextPage && <CircularProgress />}
+            <div style={{ height: "1px" }} ref={ref}></div>
+          </ProductWrapper>
+        </RightSideWrapper>
       </Wrapper>
     </>
   );

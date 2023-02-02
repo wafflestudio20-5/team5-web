@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { StyleFeed } from "../../../types/style";
 import StyleFeedDetailHeader from "../style-feed-detail-header";
@@ -22,11 +22,13 @@ import CommentIcon from "../../../assets/comment-icon.svg";
 import FollowedIcon from "../../../assets/followed-icon.svg";
 
 import StyleFeedDetailContent from "../style-feed-detail-content";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { fetchAllStyleFeed } from "../../../api/style";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAppSelector } from "../../../store/hooks";
+import { useIntersect } from "../../../hooks/useIntersect";
+import StyleFeedCommentOverview from "../style-feed-comment-overview";
 
 interface FetchedData {
   previous?: string;
@@ -36,21 +38,43 @@ interface FetchedData {
 
 const StyleFeedDetails = () => {
   const { accessToken } = useAppSelector((state) => state.session);
-  const pageParam = null;
-  const { data, isLoading } = useQuery<FetchedData, AxiosError>({
-    queryKey: ["stylefeeds", accessToken],
-    queryFn: () => fetchAllStyleFeed({ accessToken, pageParam }),
+  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
+    FetchedData,
+    AxiosError
+  >(
+    ["allStyleFeeds", accessToken],
+    ({ pageParam = "" }) => fetchAllStyleFeed({ pageParam, accessToken }),
+    {
+      getNextPageParam: ({ next }) =>
+        next
+          ? next.length > 0
+            ? next.split("cursor")[1].split("&")[0].slice(1)
+            : undefined
+          : undefined,
+    }
+  );
+
+  const feeds = useMemo(
+    () => (data ? data.pages.flatMap((data) => data.results) : []),
+    [data]
+  );
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
   });
 
   const [follow, setFollow] = useState(false);
 
   return (
     <Wrapper>
-      {isLoading ? (
+      {isFetching ? (
         <CircularProgress />
       ) : (
         <div>
-          {data?.results.map((feed) => (
+          {feeds.map((feed) => (
             <FeedWrapper key={feed.id} id={feed.id.toString()}>
               <StyleFeedDetailHeader
                 uid={feed.created_by.user_id}
@@ -62,11 +86,6 @@ const StyleFeedDetails = () => {
               <FeedImageWrapper>
                 <StyleFeedImages images={feed.images} />
               </FeedImageWrapper>
-              <FeedItemTagWrapper>
-                <FeedItemTagInfo>
-                  상품 태그 <strong>2</strong>개
-                </FeedItemTagInfo>
-              </FeedItemTagWrapper>
               <FeedContentWrapper>
                 <FeedContentIconWrapper>
                   {!follow ? (
@@ -101,6 +120,7 @@ const StyleFeedDetails = () => {
                     <FeedCommentInfo>
                       댓글 <strong>{feed.num_comments}</strong>개
                     </FeedCommentInfo>
+                    <StyleFeedCommentOverview id={feed.id} />
                   </FeedCommentWrapper>
                 ) : null}
               </FeedContentWrapper>

@@ -14,7 +14,7 @@ import {
   StyledHashLink,
   Wrapper,
 } from "./style-feed-overview.styled";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchAllStyleFeed } from "../../../api/style";
 import CircularProgress from "@mui/material/CircularProgress";
 import { scrollWithOffset } from "../../../utils/HashLink";
@@ -30,16 +30,11 @@ interface FetchedData {
 const StyleFeedOverview = () => {
   const { accessToken } = useAppSelector((state) => state.session);
 
-  // const { data, isLoading } = useQuery<FetchedData, AxiosError>({
-  //   queryKey: ["stylefeeds", accessToken],
-  //   queryFn: () => fetchAllStyleFeed(accessToken),
-  // });
-
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
     FetchedData,
     AxiosError
   >(
-    ["allShopProducts", accessToken],
+    ["allStyleFeeds", accessToken],
     ({ pageParam = "" }) => fetchAllStyleFeed({ pageParam, accessToken }),
     {
       getNextPageParam: ({ next }) =>

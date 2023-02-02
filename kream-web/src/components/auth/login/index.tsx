@@ -10,20 +10,21 @@ import {
   SocialLoginLogo,
 } from "./login.styled";
 import kreamFullLogo from "../../../assets/kream_full_logo.png";
-import naverLogo from "../../../assets/naver_logo.png";
+
 import googleLogo from "../../../assets/google_logo.png";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import FormItem from "../form-item";
 import { InputChecker } from "../../../types/signUpRequest";
 
 import { useNavigate } from "react-router-dom";
 
 import NaverLogin from "../naver-login";
-import GoogleLogin from "../google-login";
+
 import { login } from "../../../store/reducers/sessionReducer";
 import { StyledLink } from "../../../utils/StyledComponents";
 import { useAppDispatch } from "../../../store/hooks";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   // const naverRef = useRef();
@@ -74,6 +75,11 @@ const Login = () => {
     navigate("/");
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: (token) =>
+      navigate(`/login/google_login?access_token=${token.access_token}`),
+  });
+
   return (
     <Wrapper>
       <Logo alt="kream-full-logo" src={kreamFullLogo} />
@@ -118,20 +124,11 @@ const Login = () => {
         </StyledLink>
       </SignUpWrapper>
       <SocialLoginWrapper>
-        <SocialLogin>
-          <SocialLoginLogo
-            // onClick={handleNaverLogin}
-            alt="naver-logo"
-            src={naverLogo}
-          />
-          <p>네이버로 로그인</p>
-        </SocialLogin>
-        <SocialLogin>
+        <NaverLogin />
+        <SocialLogin onClick={() => googleLogin()}>
           <SocialLoginLogo alt="google-logo" src={googleLogo} />
           <p>Google로 로그인</p>
         </SocialLogin>
-        <NaverLogin />
-        <GoogleLogin />
       </SocialLoginWrapper>
     </Wrapper>
   );

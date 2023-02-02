@@ -13,7 +13,7 @@ export const fetchAllStyleFeed = async ({
   if (accessToken) {
     try {
       let page = "";
-      if (pageParam) {
+      if (pageParam !== null) {
         page = `&cursor=${pageParam}`;
       }
       const res = await axios.get(
@@ -57,6 +57,32 @@ interface FollowProps {
 export const follow = async ({ uid, accessToken }: FollowProps) => {
   try {
     const res = await axios.patch(`/styles/profiles/${uid}/follow/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface fetchAllCommentsProps {
+  id: number;
+  accessToken: string | null;
+}
+
+export const fetchAllComments = async ({
+  id,
+  accessToken,
+}: fetchAllCommentsProps) => {
+  try {
+    const res = await axios.patch(`/styles/posts/${id}/comments/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

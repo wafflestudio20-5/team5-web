@@ -30,3 +30,26 @@ export const NaverLoginTitle = styled.span`
   line-height: 24px;
 `;
 // color: ${({ theme }) => theme.White};
+
+export const SocialLogin = styled.button`
+  position: relative;
+  width: 400px;
+  height: 50px;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: white;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+export const SocialLoginLogo = styled.img`
+  position: absolute;
+  left: 17px;
+  width: 20px;
+  height: 20px;
+`;

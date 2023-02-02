@@ -6,12 +6,14 @@ interface ShopProducts {
   pageParam: number;
   brand: Brands[];
   category: Categories | null;
+  delivery: Categories | null;
 }
 
 export const fetchAllShopProducts = async ({
   pageParam,
   brand,
   category,
+  delivery,
 }: ShopProducts) => {
   try {
     let brandList = "";
@@ -26,8 +28,12 @@ export const fetchAllShopProducts = async ({
     if (category) {
       categoryList = `&category=${category.engName}`;
     }
+    let deliveryList = "";
+    if (delivery) {
+      deliveryList = `&delivery_tag=${delivery.engName}`;
+    }
     const res = await axios.get(
-      `${API_URL}/shop/productinfos/?page=${pageParam}${categoryList}${brandList}`
+      `${API_URL}/shop/productinfos/?page=${pageParam}${categoryList}${deliveryList}${brandList}`
     );
     return res.data;
   } catch (e: unknown) {

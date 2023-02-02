@@ -25,6 +25,15 @@ export const requestNaverlogin = async (token: string) => {
   return res;
 };
 
+export const requestGooglelogin = async (token: string) => {
+  const res = await axios.get(`${API_URL}/accounts/social/google/`, {
+    params: { token: token },
+    withCredentials: true,
+  });
+
+  return res;
+};
+
 export const requestRefresh = async () => {
   const res = await axios.post(
     `${API_URL}/accounts/token/refresh`,

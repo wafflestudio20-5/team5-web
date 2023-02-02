@@ -10,7 +10,11 @@ export const requestLogin = async ({ email, password }: LoginRequest) => {
       email: email,
       password: password,
     },
-    { withCredentials: true }
+    {
+      headers: {
+        withCredentials: true,
+      },
+    }
   );
 
   return res;
@@ -19,7 +23,7 @@ export const requestLogin = async ({ email, password }: LoginRequest) => {
 export const requestNaverlogin = async (token: string) => {
   const res = await axios.get(`${API_URL}/accounts/social/naver/`, {
     params: { token: token },
-    withCredentials: true,
+    headers: { withCredentials: true },
   });
 
   return res;

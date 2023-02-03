@@ -60,4 +60,5 @@ export const FollowButton = styled.button<{
     props.followed === true ? "1px solid #d3d3d3" : "1px solid black"};
   border-radius: 8px;
   font-size: 12px;
+  cursor: pointer;
 `;

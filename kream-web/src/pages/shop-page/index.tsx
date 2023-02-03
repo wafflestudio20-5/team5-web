@@ -53,6 +53,7 @@ const ShopPage = () => {
         next?.length > 0
           ? Number(next.split("page")[1].split("&")[0].slice(1))
           : undefined,
+      staleTime: 1000,
     }
   );
 

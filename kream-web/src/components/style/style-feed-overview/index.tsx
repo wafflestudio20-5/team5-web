@@ -22,8 +22,8 @@ import { useAppSelector } from "../../../store/hooks";
 import { useIntersect } from "../../../hooks/useIntersect";
 
 interface FetchedData {
-  previous: string | null;
-  next: string | null;
+  previous: string;
+  next: string;
   results: StyleFeed[];
 }
 
@@ -38,11 +38,10 @@ const StyleFeedOverview = () => {
     ({ pageParam = "" }) => fetchAllStyleFeed({ pageParam, accessToken }),
     {
       getNextPageParam: ({ next }) =>
-        next
-          ? next.length > 0
-            ? next.split("cursor")[1].split("&")[0].slice(1)
-            : undefined
+        next?.length > 0
+          ? next.split("cursor")[1].split("&")[0].slice(1)
           : undefined,
+      staleTime: 5000,
     }
   );
 
@@ -60,36 +59,35 @@ const StyleFeedOverview = () => {
 
   return (
     <Wrapper>
-      {isFetching ? (
-        <CircularProgress />
-      ) : (
-        <MasonryWrapper>
-          {feeds.map((feed) => (
-            <FeedWrapper key={feed.id}>
-              <StyledHashLink
-                to={`/style/details#${feed.id}`}
-                scroll={(el) => scrollWithOffset(el)}
-              >
-                <FeedImg>
-                  <StyleFeedThumbnail thumbnail={feed.images[0]} />
-                </FeedImg>
-              </StyledHashLink>
+      <MasonryWrapper>
+        {feeds.map((feed) => (
+          <FeedWrapper key={feed.id}>
+            <StyledHashLink
+              to={`/style/details#${feed.id}`}
+              scroll={(el) => scrollWithOffset(el)}
+            >
+              <FeedImg>
+                <StyleFeedThumbnail thumbnail={feed.images[0]} />
+              </FeedImg>
+            </StyledHashLink>
 
-              <FeedContent>
-                <StyleFeedContent
-                  id={feed.id}
-                  uid={feed.created_by.user_id}
-                  uimage={feed.created_by.image}
-                  nickname={feed.created_by.user_name}
-                  content={feed.content}
-                  likes={feed.num_likes}
-                />
-              </FeedContent>
-            </FeedWrapper>
-          ))}
-          <div style={{ height: "1px" }} ref={ref}></div>
-        </MasonryWrapper>
-      )}
+            <FeedContent>
+              <StyleFeedContent
+                id={feed.id}
+                uid={feed.created_by.user_id}
+                uimage={feed.created_by.image}
+                nickname={feed.created_by.user_name}
+                content={feed.content}
+                likes={feed.num_likes}
+                liked={feed.liked}
+              />
+            </FeedContent>
+          </FeedWrapper>
+        ))}
+      </MasonryWrapper>
+
+      {isFetching && hasNextPage && <CircularProgress />}
+      <div style={{ height: "1px" }} ref={ref}></div>
     </Wrapper>
   );
 };

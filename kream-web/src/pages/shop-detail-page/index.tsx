@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useParams } from "react-router-dom";
-import { fetchShopProduct } from "../../api/shop";
+import { fetchShopProduct, wish } from "../../api/shop";
 import Header from "../../components/header";
 import { shopProduct } from "../../types/shop";
 import {
@@ -44,9 +44,11 @@ import WishIcon from "../../assets/wish-icon.svg";
 import { useEffect, useState } from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { useAppSelector } from "../../store/hooks";
 
 const ShopDetailPage = () => {
   const { id } = useParams();
+  const { accessToken } = useAppSelector((state) => state.session);
   const { data, isLoading } = useQuery<shopProduct, AxiosError>({
     queryKey: ["shopProduct", id],
     queryFn: () => fetchShopProduct(id),
@@ -57,6 +59,11 @@ const ShopDetailPage = () => {
 
   const moveSlide = (direction: number) => {
     setCurrent((current) => current + direction);
+  };
+
+  const handleWish = async () => {
+    const res = await wish({ id, accessToken });
+    console.log(res);
   };
 
   useEffect(() => {
@@ -146,7 +153,7 @@ const ShopDetailPage = () => {
                       </BidButtonPriceWrapper>
                     </BidButton>
                   </BidButtonWrapper>
-                  <WishButton>
+                  <WishButton onClick={handleWish}>
                     <Icon alt="wish-icon" src={WishIcon} />
                     <WishButtonTitle>관심상품</WishButtonTitle>
                     <WishButtonInfo>{data?.wishes}</WishButtonInfo>

@@ -29,7 +29,7 @@ export const fetchAllStyleFeed = async ({
       return res.data;
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
-        console.log(e.response?.data.message);
+        console.log(e.response?.data);
       }
       return null;
     }
@@ -42,7 +42,7 @@ export const fetchAllStyleFeed = async ({
       return res.data;
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
-        console.log(e.response?.data.message);
+        console.log(e.response?.data);
       }
       return null;
     }
@@ -56,12 +56,43 @@ interface FollowProps {
 
 export const follow = async ({ uid, accessToken }: FollowProps) => {
   try {
-    const res = await axios.patch(`/styles/profiles/${uid}/follow/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const res = await axios.patch(
+      `/styles/profiles/${uid}/follow/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface LikeProps {
+  pid: number;
+  accessToken: string | null;
+}
+
+export const like = async ({ pid, accessToken }: LikeProps) => {
+  try {
+    const res = await axios.patch(
+      `/styles/posts/${pid}/like/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     return res.data;
   } catch (e: unknown) {
@@ -82,12 +113,93 @@ export const fetchAllComments = async ({
   accessToken,
 }: fetchAllCommentsProps) => {
   try {
-    const res = await axios.patch(`/styles/posts/${id}/comments/`, {
+    const res = await axios.get(`/styles/posts/${id}/comments/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
       withCredentials: true,
     });
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface postCommentProps {
+  id: number;
+  accessToken: string | null;
+  content: string;
+}
+
+export const postComment = async ({
+  id,
+  accessToken,
+  content,
+}: postCommentProps) => {
+  try {
+    const res = await axios.post(
+      `/styles/posts/${id}/comments/`,
+      { content: content },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface LikeCommentProps {
+  cid: number;
+  accessToken: string | null;
+}
+
+export const likeComment = async ({ cid, accessToken }: LikeCommentProps) => {
+  try {
+    const res = await axios.patch(
+      `/styles/comments/${cid}/like/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+export const likeReply = async ({ cid, accessToken }: LikeCommentProps) => {
+  try {
+    const res = await axios.patch(
+      `/styles/replies/${cid}/like/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     return res.data;
   } catch (e: unknown) {

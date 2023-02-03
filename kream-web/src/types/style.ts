@@ -39,4 +39,6 @@ export interface StyleFeedComment {
   created_by: StyleFeedUser;
   created_at: string;
   replies: StyleFeedReply[];
+  num_likes: number;
+  liked: boolean;
 }

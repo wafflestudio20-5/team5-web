@@ -14,6 +14,7 @@ import moment from "moment";
 import { useAppSelector } from "../../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { follow } from "../../../api/style";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface StyleFeedDetailHeaderProps {
   uid: number;
@@ -32,18 +33,24 @@ const StyleFeedDetailHeader = ({
 }: StyleFeedDetailHeaderProps) => {
   require("moment");
   require("moment/locale/ko");
+
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
   const { accessToken } = useAppSelector((state) => state.session);
-  const requestFollow = useCallback(async () => {
-    const res = await follow({ uid, accessToken });
-    console.log(res);
-  }, [accessToken, uid]);
 
-  const handleFollow = () => {
-    if (accessToken) {
-      requestFollow();
-    } else {
+  const { mutate } = useMutation({
+    mutationFn: (uid: number) => follow({ uid, accessToken }),
+    onSettled: () => {
+      queryClient.invalidateQueries(["allStyleFeeds", accessToken]);
+    },
+  });
+
+  const handleFollow = (uid: number) => {
+    if (!accessToken) {
       navigate("/login");
+    } else {
+      mutate(uid);
     }
   };
   return (
@@ -59,7 +66,7 @@ const StyleFeedDetailHeader = ({
         </SubInfo>
       </UserInfo>
       <FollowButtonWrapper>
-        <FollowButton onClick={handleFollow} followed={followed}>
+        <FollowButton onClick={() => mutate(uid)} followed={followed}>
           {followed === true ? "팔로잉" : "팔로우"}
         </FollowButton>
       </FollowButtonWrapper>

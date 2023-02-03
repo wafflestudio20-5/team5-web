@@ -48,6 +48,7 @@ export const LikeIcon = styled.img`
   width: 20px;
   height: 20px;
   color: rgba(34, 34, 34, 0.5);
+  cursor: pointer;
 `;
 
 export const LikeNum = styled.p`

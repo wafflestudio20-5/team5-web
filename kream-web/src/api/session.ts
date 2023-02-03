@@ -10,11 +10,7 @@ export const requestLogin = async ({ email, password }: LoginRequest) => {
       email: email,
       password: password,
     },
-    {
-      headers: {
-        withCredentials: true,
-      },
-    }
+    { withCredentials: true }
   );
 
   return res;
@@ -23,7 +19,7 @@ export const requestLogin = async ({ email, password }: LoginRequest) => {
 export const requestNaverlogin = async (token: string) => {
   const res = await axios.get(`${API_URL}/accounts/social/naver/`, {
     params: { token: token },
-    headers: { withCredentials: true },
+    withCredentials: true,
   });
 
   return res;
@@ -68,7 +64,7 @@ export const signup = async ({
     return { success: "success sign up" };
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
-      console.log(e.response?.data.message);
+      console.log(e.response?.data);
     }
     return null;
   }

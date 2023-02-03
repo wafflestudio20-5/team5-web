@@ -38,7 +38,7 @@ export const fetchAllShopProducts = async ({
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
-      console.log(e.response?.data.message);
+      console.log(e.response?.data);
     }
     return null;
   }
@@ -57,7 +57,7 @@ export const fetchShopProduct = async (id: string | undefined) => {
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
-      console.log(e.response?.data.message);
+      console.log(e.response?.data);
     }
     return null;
   }
@@ -69,7 +69,33 @@ export const fetchBrands = async () => {
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
-      console.log(e.response?.data.message);
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface wishProps {
+  id?: string;
+  accessToken: string | null;
+}
+
+export const wish = async ({ id, accessToken }: wishProps) => {
+  try {
+    const res = await axios.post(
+      `${API_URL}/shop/products/${id}/wishes/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
     }
     return null;
   }

@@ -12,8 +12,14 @@ import {
 } from "./style-feed-content.styled";
 import SmileIcon from "../../../assets/smile-icon.svg";
 import PersonIcon from "../../../assets/person-icon.svg";
+import FollowedIcon from "../../../assets/followed-icon.svg";
+
 import { scrollWithOffset } from "../../../utils/HashLink";
 import { StyledLink } from "../../../utils/StyledComponents";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAppSelector } from "../../../store/hooks";
+import { like } from "../../../api/style";
+import { useNavigate } from "react-router-dom";
 
 interface StyleFeedContentProps {
   id: number;
@@ -22,6 +28,7 @@ interface StyleFeedContentProps {
   nickname: string;
   content: string;
   likes: number;
+  liked: boolean | string | undefined;
 }
 
 const StyleFeedContent = ({
@@ -31,7 +38,25 @@ const StyleFeedContent = ({
   nickname,
   content,
   likes,
+  liked,
 }: StyleFeedContentProps) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { accessToken } = useAppSelector((state) => state.session);
+  const { mutate } = useMutation({
+    mutationFn: (pid: number) => like({ pid, accessToken }),
+    onSettled: () => {
+      queryClient.invalidateQueries(["allStyleFeeds", accessToken]);
+    },
+  });
+
+  const handleLike = (id: number) => {
+    if (!accessToken) {
+      navigate("/login");
+    } else {
+      mutate(id);
+    }
+  };
   return (
     <Wrapper>
       <FeedInfo>
@@ -46,7 +71,20 @@ const StyleFeedContent = ({
         </StyledLink>
 
         <LikeIconWrapper>
-          <LikeIcon alt="like-icon" src={SmileIcon} />
+          {liked === true ? (
+            <LikeIcon
+              onClick={() => handleLike(id)}
+              alt="like-icon"
+              src={FollowedIcon}
+            />
+          ) : (
+            <LikeIcon
+              onClick={() => handleLike(id)}
+              alt="smile-icon"
+              src={SmileIcon}
+            />
+          )}
+
           <LikeNum>{likes}</LikeNum>
         </LikeIconWrapper>
       </FeedInfo>

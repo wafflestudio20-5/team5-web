@@ -20,11 +20,12 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const queryClient = new QueryClient();
-  const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID as string;
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <GoogleOAuthProvider clientId={googleClientId}>
+        <GoogleOAuthProvider
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
+        >
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />

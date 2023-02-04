@@ -18,8 +18,34 @@ import {
 } from "./my-info-page.styled";
 import PersonIcon from "../../assets/person-icon.svg";
 import { StyledButton } from "../../utils/StyledComponents";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useNavigate } from "react-router-dom";
+import { getMyInfo } from "../../store/reducers/profileReducer";
+import axios from "axios";
 
 const MyInfoPage = () => {
+  const { myInfo } = useAppSelector((state) => state.profile);
+
+  const { accessToken } = useAppSelector((state) => state.session);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/login");
+    } else {
+      dispatch(getMyInfo(accessToken))
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          if (axios.isAxiosError(e)) {
+            console.log(e);
+          }
+        });
+    }
+  }, []);
   return (
     <>
       <Header />
@@ -30,7 +56,7 @@ const MyInfoPage = () => {
           <ProfileImageWrapper>
             <ProfileImage alt="profile-image" src={PersonIcon} />
             <ImageButtonWrapper>
-              <Nickname>woojoo1114</Nickname>
+              <Nickname>{myInfo?.email.split("@")[0]}</Nickname>
               <ButtonWrapper>
                 <StyledButton>이미지 변경</StyledButton>
                 <StyledButton>삭제</StyledButton>
@@ -42,33 +68,23 @@ const MyInfoPage = () => {
             <InfoDetailWrapper>
               <InfoDetailContentWrapper>
                 <InfoDetailName>이메일 주소</InfoDetailName>
-                <InfoDetailContent>woojoo1114@naver.com</InfoDetailContent>
+                <InfoDetailContent>{myInfo?.email}</InfoDetailContent>
               </InfoDetailContentWrapper>
-              <StyledButton>변경</StyledButton>
-            </InfoDetailWrapper>
-            <InfoDetailWrapper>
-              <InfoDetailContentWrapper>
-                <InfoDetailName>비밀번호</InfoDetailName>
-                <InfoDetailContent>●●●●●●●●●●</InfoDetailContent>
-              </InfoDetailContentWrapper>
-              <StyledButton>변경</StyledButton>
             </InfoDetailWrapper>
           </InfoWrapper>
           <InfoWrapper>
             <InfoName>개인 정보</InfoName>
             <InfoDetailWrapper>
               <InfoDetailContentWrapper>
-                <InfoDetailName>이름</InfoDetailName>
-                <InfoDetailContent>woojoo1114</InfoDetailContent>
+                <InfoDetailName>핸드폰 번호</InfoDetailName>
+                <InfoDetailContent>{myInfo?.phone_number}</InfoDetailContent>
               </InfoDetailContentWrapper>
-              <StyledButton>변경</StyledButton>
             </InfoDetailWrapper>
             <InfoDetailWrapper>
               <InfoDetailContentWrapper>
                 <InfoDetailName>신발 사이즈</InfoDetailName>
-                <InfoDetailContent>260</InfoDetailContent>
+                <InfoDetailContent>{myInfo?.shoe_size}</InfoDetailContent>
               </InfoDetailContentWrapper>
-              <StyledButton>변경</StyledButton>
             </InfoDetailWrapper>
           </InfoWrapper>
         </ContentWrapper>

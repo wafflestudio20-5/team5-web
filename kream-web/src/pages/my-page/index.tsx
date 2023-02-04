@@ -1,5 +1,5 @@
 import Header from "../../components/header";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   ButtonWrapper,
   Email,
@@ -16,10 +16,34 @@ import PersonIcon from "../../assets/person-icon.svg";
 import MyPageSidebar from "../../components/my-page-sidebar";
 
 import { StyledButton, StyledLink } from "../../utils/StyledComponents";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getMyInfo } from "../../store/reducers/profileReducer";
+import axios from "axios";
 
 const MyPage = () => {
   const { myInfo } = useAppSelector((state) => state.profile);
 
+  const { accessToken } = useAppSelector((state) => state.session);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/login");
+    } else {
+      dispatch(getMyInfo(accessToken))
+        .unwrap()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          if (axios.isAxiosError(e)) {
+            console.log(e);
+          }
+        });
+    }
+  }, []);
   return (
     <>
       <Header />
@@ -29,13 +53,13 @@ const MyPage = () => {
           <MyProfileWrapper>
             <ProfileImage alt="profile-image" src={PersonIcon} />
             <InfoWrapper>
-              <Nickname>woojoo1114</Nickname>
-              <Email>woojoo1114@naver.com</Email>
+              <Nickname>{myInfo?.email.split("@")[0]}</Nickname>
+              <Email>{myInfo?.email}</Email>
               <ButtonWrapper>
                 <StyledLink to="profile">
                   <StyledButton>프로필 수정</StyledButton>
                 </StyledLink>
-                <StyledLink to="/style">
+                <StyledLink to={`/profile/${myInfo?.id}`}>
                   <StyledButton>내 스타일</StyledButton>
                 </StyledLink>
               </ButtonWrapper>

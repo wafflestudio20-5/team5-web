@@ -63,6 +63,7 @@ const StyleFeedContent = ({
         <StyledLink to={`/style/users/${uid}`}>
           <UserInfo>
             <Profile
+              onClick={() => navigate(`/profile/${uid}`)}
               alt="user-profile-image"
               src={uimage ? uimage : PersonIcon}
             />

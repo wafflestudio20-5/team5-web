@@ -1,12 +1,38 @@
 import axios from "axios";
 import { API_URL } from "../libs/urls";
 
-export const fetchMyInfo = async (access_token: string | null) => {
+export const fetchMyInfo = async (accessToken: string | null) => {
   const res = await axios.get(`${API_URL}/accounts/user`, {
     headers: {
-      Authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     withCredentials: true,
   });
   return res;
+};
+
+interface fetchUserProfileProps {
+  accessToken: string | null;
+  id: string | undefined;
+}
+
+export const fetchUserProfile = async ({
+  accessToken,
+  id,
+}: fetchUserProfileProps) => {
+  try {
+    const res = await axios.get(`${API_URL}/styles/profiles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
 };

@@ -57,6 +57,7 @@ const StyleFeedDetailHeader = ({
     <Wrapper>
       <UserInfo>
         <Profile
+          onClick={() => navigate(`/profile/${uid}`)}
           alt="style-feed-detail-profile"
           src={uimage ? uimage : PersonIcon}
         />

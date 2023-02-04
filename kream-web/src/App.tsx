@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ShopDetailPage from "./pages/shop-detail-page";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ProfilePage from "./pages/profile-page";
 
 function App() {
   const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ function App() {
               <Route path="/style" element={<StylePage />} />
               <Route path="/style/details" element={<StyleDetailPage />} />
               <Route path="/details/:id" element={<ShopDetailPage />} />
+              <Route path="/profile/:id" element={<ProfilePage />} />
             </Routes>
 
             <ReactQueryDevtools initialIsOpen={true} />

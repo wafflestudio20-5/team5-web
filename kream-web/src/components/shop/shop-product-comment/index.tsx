@@ -46,6 +46,7 @@ import {
   likeShopReply,
   postShopComment,
 } from "../../../api/shop";
+import { useNavigate } from "react-router-dom";
 
 interface ShopProductCommentModalProps {
   id: string | undefined;
@@ -72,6 +73,7 @@ const ShopProductCommentModal = ({
   require("moment");
   require("moment/locale/ko");
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { accessToken } = useAppSelector((state) => state.session);
 
@@ -162,6 +164,9 @@ const ShopProductCommentModal = ({
               <FeedCommentWithLikeWrapper key={comment.id}>
                 <FeedComment>
                   <Profile
+                    onClick={() =>
+                      navigate(`/profile/${comment.created_by.user_id}`)
+                    }
                     alt="comment-profile"
                     src={
                       comment.created_by.image

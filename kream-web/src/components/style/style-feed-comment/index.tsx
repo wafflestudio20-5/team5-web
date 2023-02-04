@@ -39,6 +39,7 @@ import FollowedIcon from "../../../assets/followed-icon.svg";
 import moment from "moment";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface StyleFeedCommentModalProps {
   id: number;
@@ -65,6 +66,7 @@ const StyleFeedCommentModal = ({
   require("moment");
   require("moment/locale/ko");
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { accessToken } = useAppSelector((state) => state.session);
 
@@ -126,6 +128,7 @@ const StyleFeedCommentModal = ({
           <FeedComment>
             <ProfileWrapper>
               <Profile
+                onClick={() => navigate(`/profile/${feed.created_by.user_id}`)}
                 alt="feed-profile"
                 src={feed.created_by.image ? feed.created_by.image : PersonIcon}
               />
@@ -156,6 +159,9 @@ const StyleFeedCommentModal = ({
               <FeedCommentWithLikeWrapper key={comment.id}>
                 <FeedComment>
                   <Profile
+                    onClick={() =>
+                      navigate(`/profile/${comment.created_by.user_id}`)
+                    }
                     alt="comment-profile"
                     src={
                       comment.created_by.image

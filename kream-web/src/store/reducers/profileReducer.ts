@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchMyInfo } from "../../api/profile";
+import { User } from "../../types/profile";
 
 export const getMyInfo = createAsyncThunk(
   "profile/myInfo",
-  async (access_token: string | null, { rejectWithValue }) => {
+  async (accessToken: string | null, { rejectWithValue }) => {
     try {
-      const res = await fetchMyInfo(access_token);
+      const res = await fetchMyInfo(accessToken);
       return res.data;
     } catch (e) {
       rejectWithValue(e);
@@ -14,7 +15,7 @@ export const getMyInfo = createAsyncThunk(
 );
 
 interface profileState {
-  myInfo: any;
+  myInfo: User | null;
   myProfile: null | string;
   userProfile: null | string;
 }

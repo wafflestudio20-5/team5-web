@@ -81,7 +81,7 @@ const ShopDetailPage = () => {
     queryFn: () => fetchShopProduct(id),
   });
 
-  const shopCommentData = useQuery<FetchedData, AxiosError>({
+  const shopCommentData = useQuery<StyleFeedComment[], AxiosError>({
     queryKey: ["shopProductComment", id, accessToken],
     queryFn: () => fetchShopComment({ id, accessToken }),
   });
@@ -290,7 +290,7 @@ const ShopDetailPage = () => {
             </InfoDeliveryDetailWrapper>
             <CommentButtonWrapper>
               <CommentButtonTitle>
-                후기 <strong>{shopCommentData.data?.results.length}</strong>개
+                후기 <strong>{shopCommentData.data?.length}</strong>개
               </CommentButtonTitle>
               <CommentButton onClick={handleCommentButtonClick}>
                 후기 확인하기

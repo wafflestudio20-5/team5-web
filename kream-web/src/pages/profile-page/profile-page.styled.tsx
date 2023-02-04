@@ -58,3 +58,7 @@ export const ProfileInfo = styled.p`
   font-size: 16px;
   margin: 0;
 `;
+
+export const PostWrapper = styled.div`
+  margin: 0 10%;
+`;

@@ -60,16 +60,14 @@ const StyleFeedContent = ({
   return (
     <Wrapper>
       <FeedInfo>
-        <StyledLink to={`/style/users/${uid}`}>
-          <UserInfo>
-            <Profile
-              onClick={() => navigate(`/profile/${uid}`)}
-              alt="user-profile-image"
-              src={uimage ? uimage : PersonIcon}
-            />
-            <Username>{nickname}</Username>
-          </UserInfo>
-        </StyledLink>
+        <UserInfo>
+          <Profile
+            onClick={() => navigate(`/profile/${uid}`)}
+            alt="user-profile-image"
+            src={uimage ? uimage : PersonIcon}
+          />
+          <Username>{nickname}</Username>
+        </UserInfo>
 
         <LikeIconWrapper>
           {liked === true ? (

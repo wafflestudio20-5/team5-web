@@ -88,6 +88,7 @@ export const Profile = styled.img`
   border-radius: 50%;
   border: 1px solid rgba(34, 34, 34, 0.1);
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 export const ContentWrapper = styled.div`

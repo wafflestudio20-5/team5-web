@@ -20,6 +20,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { scrollWithOffset } from "../../../utils/HashLink";
 import { useAppSelector } from "../../../store/hooks";
 import { useIntersect } from "../../../hooks/useIntersect";
+import Masonry from "@mui/lab/Masonry";
 
 interface FetchedData {
   previous: string;
@@ -59,7 +60,7 @@ const StyleFeedOverview = () => {
 
   return (
     <Wrapper>
-      <MasonryWrapper>
+      <Masonry columns={4} spacing={2}>
         {feeds.map((feed) => (
           <FeedWrapper key={feed.id}>
             <StyledHashLink
@@ -84,7 +85,7 @@ const StyleFeedOverview = () => {
             </FeedContent>
           </FeedWrapper>
         ))}
-      </MasonryWrapper>
+      </Masonry>
 
       {isFetching && hasNextPage && <CircularProgress />}
       <div style={{ height: "1px" }} ref={ref}></div>

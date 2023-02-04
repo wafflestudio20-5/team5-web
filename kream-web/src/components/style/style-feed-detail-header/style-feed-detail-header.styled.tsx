@@ -21,6 +21,7 @@ export const Profile = styled.img`
   height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(34, 34, 34, 0.1);
+  cursor: pointer;
 `;
 
 export const SubInfo = styled.div`

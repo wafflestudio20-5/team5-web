@@ -50,7 +50,7 @@ export const fetchAllStyleFeed = async ({
 };
 
 interface FollowProps {
-  uid: number;
+  uid: number | undefined;
   accessToken: string | null;
 }
 

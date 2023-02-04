@@ -36,3 +36,45 @@ export const fetchUserProfile = async ({
     return null;
   }
 };
+
+export const fetchUserFeeds = async ({
+  accessToken,
+  id,
+}: fetchUserProfileProps) => {
+  if (accessToken) {
+    try {
+      const res = await axios.get(
+        `${API_URL}/styles/posts/?type=default&user_id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      return res.data;
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        console.log(e.response?.data);
+      }
+      return null;
+    }
+  } else {
+    try {
+      const res = await axios.get(
+        `${API_URL}/styles/posts/?type=default&user_id=${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      return res.data;
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        console.log(e.response?.data);
+      }
+      return null;
+    }
+  }
+};

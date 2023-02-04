@@ -77,7 +77,7 @@ const ShopProductCommentModal = ({
 
   const { accessToken } = useAppSelector((state) => state.session);
 
-  const { data } = useQuery<FetchedData, AxiosError>({
+  const { data } = useQuery<StyleFeedComment[], AxiosError>({
     queryKey: ["shopProductComment", id, accessToken],
     queryFn: () => fetchShopComment({ id, accessToken }),
     staleTime: 5000,
@@ -160,7 +160,7 @@ const ShopProductCommentModal = ({
             ) : null}
           </FeedCommentInputWrapper>
           <FeedCommentWrapper>
-            {data?.results.map((comment, i) => (
+            {data?.map((comment, i) => (
               <FeedCommentWithLikeWrapper key={comment.id}>
                 <FeedComment>
                   <Profile

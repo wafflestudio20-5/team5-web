@@ -83,7 +83,7 @@ interface wishProps {
 export const wish = async ({ id, accessToken }: wishProps) => {
   try {
     const res = await axios.post(
-      `${API_URL}/shop/products/${id}/wishes/`,
+      `${API_URL}/shop/products/${id}/wishes`,
       {},
       {
         headers: {
@@ -92,6 +92,107 @@ export const wish = async ({ id, accessToken }: wishProps) => {
         withCredentials: true,
       }
     );
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+export const fetchShopComment = async ({ id, accessToken }: wishProps) => {
+  try {
+    const res = await axios.get(`${API_URL}/shop/productinfos/${id}/comments`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface postCommentProps {
+  id: string | undefined;
+  accessToken: string | null;
+  content: string;
+}
+
+export const postShopComment = async ({
+  id,
+  accessToken,
+  content,
+}: postCommentProps) => {
+  try {
+    const res = await axios.post(
+      `/shop/productinfos/${id}/comments/`,
+      { content: content },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+interface LikeCommentProps {
+  cid: number;
+  accessToken: string | null;
+}
+
+export const likeShopComment = async ({
+  cid,
+  accessToken,
+}: LikeCommentProps) => {
+  try {
+    const res = await axios.patch(
+      `/shop/comments/${cid}/like/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return res.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      console.log(e.response?.data);
+    }
+    return null;
+  }
+};
+
+export const likeShopReply = async ({ cid, accessToken }: LikeCommentProps) => {
+  try {
+    const res = await axios.patch(
+      `/shop/replies/${cid}/like/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {

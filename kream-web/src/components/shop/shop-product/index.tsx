@@ -29,7 +29,7 @@ interface Product {
 const ShopProduct = ({ product }: Product) => {
   return (
     <Wrapper>
-      <StyledLink to={`/shop/details/${product.id}`}>
+      <StyledLink to={`/details/${product.id}`}>
         <Thumbnail alt="product-thumbnail" src={product.productimage_urls[0]} />
         <ProductInfoWrapper>
           <BrandName>{product.brand_name}</BrandName>

@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   margin-top: 40px;
   overflow: auto;
+  padding-bottom: 120px;
 `;
 
 export const ImageWrapper = styled.div`
@@ -55,12 +56,12 @@ export const PreviousProductButton = styled.button`
   width: 44px;
   height: 44px;
   padding: 0;
-
   border: 0;
   background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const NextProductButton = styled.button`
@@ -75,6 +76,7 @@ export const NextProductButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const ImageOrderWrapper = styled.div`
@@ -259,6 +261,7 @@ export const WishButton = styled.button`
   border-radius: 10px;
   background-color: white;
   margin-top: 12px;
+  cursor: pointer;
 `;
 
 export const Icon = styled.img`
@@ -275,4 +278,78 @@ export const WishButtonInfo = styled.p`
   font-size: 15px;
   font-weight: bold;
   margin: 0;
+`;
+
+export const InfoDeliveryDetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`;
+
+export const InfoDeliveryDetailTitle = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(34, 34, 34, 0.8);
+  margin: 0;
+`;
+
+export const InfoDeliveryDetail = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export const DeliveryImage = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+`;
+
+export const EnsureImage = styled.img`
+  width: 38px;
+  height: 34px;
+  margin-right: 10px;
+`;
+
+export const DeliveryNameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+  flex: 1;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+`;
+
+export const DeliveryName = styled.p`
+  font-size: 14px;
+  margin: 0;
+`;
+export const DeliveryDate = styled.p`
+  font-size: 14px;
+  color: rgba(34, 34, 34, 0.5);
+  margin: 0;
+`;
+
+export const CommentButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  row-gap: 10px;
+`;
+
+export const CommentButtonTitle = styled.p`
+  font-size: 18px;
+  margin: 0;
+`;
+
+export const CommentButton = styled.button`
+  height: 30px;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  border: 0;
+  background-color: transparent;
+  font-size: 14px;
+  color: rgba(34, 34, 34, 0.5);
+  cursor: pointer;
 `;

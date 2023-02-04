@@ -7,7 +7,6 @@ import StyleDetailPage from "./pages/style-detail-page";
 import StylePage from "./pages/style-page";
 import "./App.css";
 import SignUpEmailSentPage from "./pages/signup-email-sent-page";
-import HomePage from "./pages/home-page";
 import NaverLoginPage from "./pages/naver-login-page";
 import GoogleLoginPage from "./pages/google-login-page";
 import MyPage from "./pages/my-page";
@@ -28,7 +27,8 @@ function App() {
         >
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<ShopPage />} />
+
               <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/login/find_password"
@@ -45,8 +45,7 @@ function App() {
               <Route path="/my/profile" element={<MyInfoPage />} />
               <Route path="/style" element={<StylePage />} />
               <Route path="/style/details" element={<StyleDetailPage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/shop/details/:id" element={<ShopDetailPage />} />
+              <Route path="/details/:id" element={<ShopDetailPage />} />
             </Routes>
 
             <ReactQueryDevtools initialIsOpen={true} />

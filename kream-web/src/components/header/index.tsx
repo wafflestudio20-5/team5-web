@@ -26,7 +26,12 @@ const Header = () => {
         {accessToken ? (
           <button
             onClick={() => dispatch(sessionActions.logout())}
-            style={{ border: "0", margin: "0", backgroundColor: "transparent" }}
+            style={{
+              border: "0",
+              margin: "0",
+              backgroundColor: "transparent",
+              cursor: "pointer",
+            }}
           >
             <UserFont>로그아웃</UserFont>
           </button>
@@ -42,13 +47,10 @@ const Header = () => {
         </Link>
         <PagePart>
           <StyledLink to="/">
-            <OtherFont>Home</OtherFont>
+            <OtherFont>SHOP</OtherFont>
           </StyledLink>
           <StyledLink to="/style">
             <OtherFont>STYLE</OtherFont>
-          </StyledLink>
-          <StyledLink to="/shop">
-            <OtherFont>SHOP</OtherFont>
           </StyledLink>
           <StyledLink to="/my">
             <OtherFont>MY</OtherFont>

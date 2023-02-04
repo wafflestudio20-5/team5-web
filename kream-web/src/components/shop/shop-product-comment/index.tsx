@@ -7,7 +7,7 @@ import {
   postComment,
 } from "../../../api/style";
 import { useAppSelector } from "../../../store/hooks";
-import { StyleFeed, StyleFeedComment } from "../../../types/style";
+import { StyleFeedComment } from "../../../types/style";
 import {
   BackgroundWrapper,
   CommentModalWrapper,
@@ -32,18 +32,25 @@ import {
   CommentLike,
   ContentInfo,
   FeedCommentInputButton,
-} from "./style-feed-comment.styled";
+} from "./shop-product-comment.styled";
 import PersonIcon from "../../../assets/person-icon.svg";
 import SmileIcon from "../../../assets/smile-icon.svg";
 import FollowedIcon from "../../../assets/followed-icon.svg";
 import moment from "moment";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { shopProduct } from "../../../types/shop";
+import {
+  fetchShopComment,
+  likeShopComment,
+  likeShopReply,
+  postShopComment,
+} from "../../../api/shop";
 
-interface StyleFeedCommentModalProps {
-  id: number;
-  feed: StyleFeed;
-  handleCommentModal: Dispatch<SetStateAction<number>>;
+interface ShopProductCommentModalProps {
+  id: string | undefined;
+  product: shopProduct | undefined;
+  handleCommentModal: Dispatch<SetStateAction<boolean>>;
 }
 
 interface FetchedData {
@@ -53,24 +60,24 @@ interface FetchedData {
 }
 
 interface PostComment {
-  id: number;
+  id: string | undefined;
   content: string;
 }
 
-const StyleFeedCommentModal = ({
+const ShopProductCommentModal = ({
   id,
-  feed,
+  product,
   handleCommentModal,
-}: StyleFeedCommentModalProps) => {
+}: ShopProductCommentModalProps) => {
   require("moment");
   require("moment/locale/ko");
   const queryClient = useQueryClient();
 
   const { accessToken } = useAppSelector((state) => state.session);
 
-  const { data } = useQuery<StyleFeedComment[], AxiosError>({
-    queryKey: ["allStyleComments", id, accessToken],
-    queryFn: () => fetchAllComments({ id, accessToken }),
+  const { data } = useQuery<FetchedData, AxiosError>({
+    queryKey: ["shopProductComment", id, accessToken],
+    queryFn: () => fetchShopComment({ id, accessToken }),
     staleTime: 5000,
   });
 
@@ -78,23 +85,23 @@ const StyleFeedCommentModal = ({
 
   const requestPostComment = useMutation({
     mutationFn: ({ id, content }: PostComment) =>
-      postComment({ id, accessToken, content }),
+      postShopComment({ id, accessToken, content }),
     onSettled: () => {
-      queryClient.invalidateQueries(["allStyleComments", id, accessToken]);
+      queryClient.invalidateQueries(["shopProductComment", id, accessToken]);
     },
   });
 
   const requestCommentLike = useMutation({
-    mutationFn: (cid: number) => likeComment({ cid, accessToken }),
+    mutationFn: (cid: number) => likeShopComment({ cid, accessToken }),
     onSettled: () => {
-      queryClient.invalidateQueries(["allStyleComments", id, accessToken]);
+      queryClient.invalidateQueries(["shopProductComment", id, accessToken]);
     },
   });
 
   const requestReplyLike = useMutation({
-    mutationFn: (cid: number) => likeReply({ cid, accessToken }),
+    mutationFn: (cid: number) => likeShopReply({ cid, accessToken }),
     onSettled: () => {
-      queryClient.invalidateQueries(["allStyleComments", id, accessToken]);
+      queryClient.invalidateQueries(["shopProductComment", id, accessToken]);
     },
   });
 
@@ -106,14 +113,13 @@ const StyleFeedCommentModal = ({
     requestPostComment.mutate({ id, content });
     setContent("");
   };
-
   return (
-    <BackgroundWrapper onClick={() => handleCommentModal(0)}>
+    <BackgroundWrapper onClick={() => handleCommentModal(false)}>
       <CommentModalWrapper onClick={(e) => e.stopPropagation()}>
         <Wrapper>
           <FeedCommentHeader>
             <CloseIcon
-              onClick={() => handleCommentModal(0)}
+              onClick={() => handleCommentModal(false)}
               sx={{
                 width: "24px",
                 height: "24px",
@@ -121,29 +127,29 @@ const StyleFeedCommentModal = ({
                 cursor: "pointer",
               }}
             />
-            <FeedCommentHeaderTitle>댓글</FeedCommentHeaderTitle>
+            <FeedCommentHeaderTitle>후기</FeedCommentHeaderTitle>
           </FeedCommentHeader>
           <FeedComment>
             <ProfileWrapper>
               <Profile
-                alt="feed-profile"
-                src={feed.created_by.image ? feed.created_by.image : PersonIcon}
+                alt="product-profile"
+                src={product?.productimage_urls[0]}
               />
             </ProfileWrapper>
             <ContentWrapper>
               <ContentHeader>
                 <p style={{ fontSize: "14px", margin: "0" }}>
-                  <strong>{feed.created_by.profile_name}</strong> {feed.content}
+                  <strong>{product?.eng_name}</strong>
                 </p>
               </ContentHeader>
-              <Date>{moment(feed.created_at).fromNow()}</Date>
+              <Date>{product?.kor_name}</Date>
             </ContentWrapper>
           </FeedComment>
           <FeedCommentInputWrapper>
             <FeedCommentInput
               onChange={handleComment}
               value={content}
-              placeholder="댓글을 입력하세요"
+              placeholder="후기를 입력하세요"
             />
             {content.length > 0 ? (
               <FeedCommentInputButton onClick={handleCommentButtonClick}>
@@ -152,7 +158,7 @@ const StyleFeedCommentModal = ({
             ) : null}
           </FeedCommentInputWrapper>
           <FeedCommentWrapper>
-            {data?.map((comment, i) => (
+            {data?.results.map((comment, i) => (
               <FeedCommentWithLikeWrapper key={comment.id}>
                 <FeedComment>
                   <Profile
@@ -195,4 +201,4 @@ const StyleFeedCommentModal = ({
   );
 };
 
-export default StyleFeedCommentModal;
+export default ShopProductCommentModal;

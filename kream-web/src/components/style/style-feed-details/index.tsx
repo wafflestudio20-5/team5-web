@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { StyleFeed } from "../../../types/style";
 import StyleFeedDetailHeader from "../style-feed-detail-header";
@@ -98,6 +98,13 @@ const StyleFeedDetails = () => {
     }
   };
 
+  useEffect(() => {
+    if (comment !== 0) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.removeProperty("overflow");
+    }
+  }, [comment]);
   return (
     <Wrapper>
       {feeds.map((feed) => (

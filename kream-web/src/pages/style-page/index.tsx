@@ -1,7 +1,7 @@
 import Header from "../../components/header";
-import StyleFeedOverview from "../../components/style-feed-overview";
+import StyleFeedOverview from "../../components/style/style-feed-overview";
 
-const StylePage: React.FC = () => {
+const StylePage = () => {
   return (
     <>
       <Header />

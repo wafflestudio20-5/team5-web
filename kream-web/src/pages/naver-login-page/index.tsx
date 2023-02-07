@@ -1,4 +1,32 @@
+import axios from "axios";
+import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { naverLogin } from "../../store/reducers/sessionReducer";
+
 const NaverLoginPage = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const getToken = useCallback(() => {
+    const token = window.location.href.split("=")[1].split("&")[0];
+
+    dispatch(naverLogin(token))
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      })
+      .catch((e) => {
+        if (axios.isAxiosError(e)) {
+          console.log(e);
+        }
+      });
+  }, [navigate, dispatch]);
+
+  useEffect(() => {
+    window.location.href.includes("access_token") && getToken();
+  }, [getToken]);
   return <></>;
 };
 

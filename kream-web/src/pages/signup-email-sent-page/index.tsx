@@ -1,5 +1,5 @@
+import SignUpEmailSent from "../../components/auth/signup-email-sent";
 import Header from "../../components/header";
-import SignUpEmailSent from "../../components/signup-email-sent";
 
 const SignUpEmailSentPage = () => {
   return (

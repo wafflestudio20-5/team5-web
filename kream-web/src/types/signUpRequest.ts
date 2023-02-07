@@ -1,11 +1,11 @@
 export interface SignUpRequest {
-  email: string;
-  password: string;
-  repassword: string;
-  shoes: number | string;
+  email: string
+  password: string
+  repassword: string
+  shoes: number | string
 }
 
 export interface InputChecker {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }

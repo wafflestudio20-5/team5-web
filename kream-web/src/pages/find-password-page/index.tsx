@@ -1,4 +1,4 @@
-import FindPassword from "../../components/find-password";
+import FindPassword from "../../components/auth/find-password";
 import Header from "../../components/header";
 import { BodyWrapper } from "./find-password-page.styled";
 

@@ -65,12 +65,6 @@ import { useAppSelector } from "../../store/hooks";
 import { StyleFeedComment } from "../../types/style";
 import ShopProductCommentModal from "../../components/shop/shop-product-comment";
 
-interface FetchedData {
-  previous: string | null;
-  next: string | null;
-  results: StyleFeedComment[];
-}
-
 const ShopDetailPage = () => {
   const queryClient = useQueryClient();
   const { id } = useParams();
